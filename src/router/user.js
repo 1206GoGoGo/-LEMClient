@@ -1,10 +1,19 @@
-import cs from '@/components/addDev/add'
-
+import login from '@/components/user/login'
+import register from '@/components/user/register'
+import error from '@/components/user/error'
 
 export default [
     {
-        path:"/addDev/add",
-        component:cs,
+        path:"/user/login",
+        component:login,
+    },
+    {
+        path:"/user/register",
+        component:register,
+    },
+    {
+        path:"/user/error",
+        component:error,
     }
 
 ]

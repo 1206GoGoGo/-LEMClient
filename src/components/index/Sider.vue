@@ -7,9 +7,9 @@
             <div>实验器材管理系统</div>
         </span>
     </div>
-    
+<!-- 00808c -->
     <span style="color:#ffffff;">当前登陆用户：王立军</span>
-   <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#191a1b" text-color="#fff" active-text-color="#fff">
+   <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#004d99" text-color="#fff" active-text-color="#fff">
       
        <el-submenu index=1>
             <template   slot="title"><i class="el-icon-setting"></i>设备申请管理</template>   
@@ -65,7 +65,8 @@ export default {
             {
                 //通过index来控制路由跳转
                 case "1-1":locthis.$router.push({path:'/addDev/add'});break;
-
+                case "1-2":locthis.$router.push({path:'/user/login'});break;
+                case "1-3":locthis.$router.push({path:'/user/error'});break;
                 
                 default:console.log("跳转错误");
             }
@@ -83,7 +84,7 @@ export default {
         top:0px;
         left:0px;
         bottom:0px;
-        background-color:#191a1b;
+        background-color:#004d99;
     }
     .sider .title-area{
         height:84px;
