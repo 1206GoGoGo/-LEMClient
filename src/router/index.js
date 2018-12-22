@@ -13,6 +13,7 @@ import count from './count.js'
 
 Vue.use(Router);
 
+
 export default new Router({
     mode:'hash',
     routes:[].concat(user,addDev,manageDev,repairDev,scrapDev,count)

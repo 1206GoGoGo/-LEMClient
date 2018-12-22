@@ -7,10 +7,17 @@
             <div>实验器材管理系统</div>
         </span>
     </div>
-    
+<!-- 00808c -->
     <span style="color:#ffffff;">当前登陆用户：王立军</span>
-   <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#191a1b" text-color="#fff" active-text-color="#fff">
+   <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#004d99" text-color="#fff" active-text-color="#fff">
       
+        <el-submenu index=1>
+            <template   slot="title"><i class="el-icon-setting"></i>登陆注册测试</template>   
+                <el-menu-item index="0-1">- -登陆</el-menu-item>
+                <el-menu-item index="0-2">- -申请记录</el-menu-item>
+                <!--el-menu-item index="1-3">- -处理申请</el-menu-item-->
+       </el-submenu>
+
        <el-submenu index=1>
             <template   slot="title"><i class="el-icon-setting"></i>设备申请管理</template>   
                 <el-menu-item index="1-1">- -设备申请</el-menu-item>
@@ -64,7 +71,13 @@ export default {
             switch(index)
             {
                 //通过index来控制路由跳转
+
+                case "0-1":locthis.$router.push({path:'/user/login'});break;
+                case "0-2":locthis.$router.push({path:'/user/error'});break;
+
+                
                 case "1-1":locthis.$router.push({path:'/addDev/add'});break;
+
                 case "1-2":locthis.$router.push({path:'/addDev/list'});break;
 
                 case "2-1":locthis.$router.push({path:'/manageDev/list'});break;
@@ -77,7 +90,6 @@ export default {
                 case "4-1":locthis.$router.push({path:'/scrapDev/list'});break;
                 //case "4-2":locthis.$router.push({path:'/manageDev/list'});break;
                 case "4-3":locthis.$router.push({path:'/scrapDev/isScrap'});break;
-
                 
                 default:console.log("跳转错误");
             }
@@ -95,7 +107,7 @@ export default {
         top:0px;
         left:0px;
         bottom:0px;
-        background-color:#191a1b;
+        background-color:#004d99;
     }
     .sider .title-area{
         height:84px;
