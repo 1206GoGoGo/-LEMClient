@@ -16,22 +16,21 @@
         </div>
         <div class = "formGroup">
             <el-form-item  label = "账 号：" prop = "user" >
-                <el-input type = "text"  auto-complete = "off" placeholder = "请输入您的账号" class = "form-control" ></el-input>
+                <el-input type = "text"  v-model="Account" auto-complete = "off" placeholder = "请输入您的账号" class = "form-control" ></el-input>
             </el-form-item> 
             <el-form-item label = "密 码：" prop = "password" class = "form-inline">
-                <el-input type = "password" auto-complete = "off" placeholder = "请输入密码" class = "form-control" ></el-input>
+                <el-input type = "password" v-model="Password" auto-complete = "off" placeholder = "请输入密码" class = "form-control" ></el-input>
             </el-form-item>
         </div>
         <div class = "remFor">
-            <el-checkbox v-model = "checked" checked class = "remember">记住密码</el-checkbox>
+            <el-checkbox v-model = "checked" checked  class = "remember">记住密码</el-checkbox>
             <!-- <a href ="" class = "forget">忘记密码？</a> -->
         </div>
         <div class = "formButton">
             <el-form-item style = "width:100%;">
-                <el-button type = "primary" style = "width:45%; float:left" >登录</el-button>
-                <el-button type = "primary" style = "width:45%; float:right" >注册</el-button>
+                <el-button type = "primary" style = "width:45%; float:left" @click="login">登录</el-button>
+                <el-button type = "primary" style = "width:45%; float:right" @click="register">注册</el-button>
             </el-form-item>
-            <!-- @click="login" -->
         </div>
     </el-form>
 </div>
@@ -71,20 +70,20 @@ export default {
                     ]
                 },
                 checked: false          
-        };       
+            }; 
+        },      
         methods:{
-            // /*注册*/
-            // Register(){
-
-            // },
-            // /*登陆*/
-            // login(){
-            //     if(this.form.name=="张三"&&this.form.password=="123456")
-            //     alert("登陆成功！")
-            //     else  alert("账号或密码错误！")
-            // }
-        };
-    }
+            /*注册*/
+            register(){
+                this.$router.push({path: '/user/register'});
+            },
+            /*登陆*/
+            login(){
+                if(this.Account=="张三"&&this.Password=="123456")
+                alert("登陆成功！")
+                else  alert("账号或密码错误！")
+            }
+        },
 } 
 </script>
  
@@ -139,6 +138,7 @@ export default {
 .remFor{
     margin-bottom: 10px;
     padding-bottom: 10px;
+    text-align: center;
 }
 .tabsUser{
     display: inline-block;

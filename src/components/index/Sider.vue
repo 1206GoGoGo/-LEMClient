@@ -91,6 +91,8 @@ export default {
                 //case "4-2":locthis.$router.push({path:'/manageDev/list'});break;
                 case "4-3":locthis.$router.push({path:'/scrapDev/isScrap'});break;
                 
+                case "5-1":locthis.$router.push({path:'/repaiInfor/repaiMoney'});break;
+                case "5-2":locthis.$router.push({path:'/repaiInfor/scrapMoney'});break;
                 default:console.log("跳转错误");
             }
         }

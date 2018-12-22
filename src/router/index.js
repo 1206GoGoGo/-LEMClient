@@ -7,7 +7,7 @@ import addDev from './addDev.js'
 import manageDev from './manageDev.js'
 import repairDev from './repairDev.js'
 import scrapDev from './scrapDev.js'
-import count from './count.js'
+import repaiInfor from './repaiInfor.js'
 
 
 
@@ -16,5 +16,5 @@ Vue.use(Router);
 
 export default new Router({
     mode:'hash',
-    routes:[].concat(user,addDev,manageDev,repairDev,scrapDev,count)
+    routes:[].concat(user,addDev,manageDev,repairDev,scrapDev,repaiInfor)
 })
