@@ -1,15 +1,19 @@
+//路由配置文件
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
-Vue.use(Router)
+import user from './user.js'
+import addDev from './addDev.js'
+import manageDev from './manageDev.js'
+import repairDev from './repairDev.js'
+import scrapDev from './scrapDev.js'
+import count from './count.js'
+
+
+
+Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
+    mode:'hash',
+    routes:[].concat(user,addDev,manageDev,repairDev,scrapDev,count)
 })
