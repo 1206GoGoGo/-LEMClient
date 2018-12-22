@@ -106,6 +106,7 @@ export default {
         display: inline-block;
         position:absolute;
         min-width:250px;
+        
         top:0px;
         left:0px;
         bottom:0px;

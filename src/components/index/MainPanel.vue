@@ -1,5 +1,5 @@
 <template>
-    <el-container class="main-panel">
+    <el-container class="main-panel" style="left:0;">
         <el-main>
             <router-view>
             </router-view>
@@ -11,11 +11,10 @@
 //主界面
 export default {
     name:"mainPanel",
-    data:function(){
-        return {
+    created(){
 
-
-        }
+        //判断是否登陆状态
+        this.$router.push({path:'/user/login'});
     }
 }
 </script>
