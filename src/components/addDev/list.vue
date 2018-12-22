@@ -3,7 +3,7 @@
       <el-header class="header-path" style="height:40px;">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>设备列表</el-breadcrumb-item>
+          <el-breadcrumb-item>申请设备列表</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
     <div style="margin-bottom:10px; text-align:left;">
@@ -47,22 +47,17 @@
         </el-table-column>
         <el-table-column
             prop="xqdm"
-            label="编号"
+            label="型号"
             sortable
             >
         </el-table-column>
         <el-table-column
             prop="xqdm"
-            label="型号"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="xqmc"
             label="规格"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="xqmc"
             label="单价"
             sortable>
         </el-table-column>
@@ -72,48 +67,43 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqdm"
-            label="购置日期"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="xqmc"
+            prop="xqjp"
             label="生产厂家"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="xqmc"
             label="保质期"
             sortable>
         </el-table-column>
         <el-table-column
-            :formatter="stateFormatter"
-            prop="zt"
+            prop="xqjp"
             label="经办人"
             sortable>
         </el-table-column>
         <el-table-column
-            :formatter="stateFormatter"
-            prop="zt"
-            label="设备当前状态"
+            prop="xqjp"
+            label="状态"
             sortable>
-        </el-table-column>
+        </el-table-column>       
         <el-table-column label="操作" width="160px">
 
             <template slot-scope="scope">
                 <el-popover trigger="hover" placement="top">
                     <el-row>
-                        <el-col :span="8"><el-button
+                        <el-col :span="12">
+                            <el-button
                             size="mini"
-                            @click="handleRepair(scope.$index, scope.row)">报修</el-button></el-col>
-                        <el-col :span="8"><el-button
+                            @click="handleRepair(scope.$index, scope.row)">同意购买</el-button></el-col>
+                        <el-col :span="12">
+                            <el-button
                             size="mini"
-                            type="danger"
-                            @click="handleScrap(scope.$index, scope.row)">报费</el-button></el-col>
-                        <el-col :span="8"><el-button
+                            @click="handleRepair(scope.$index, scope.row)">已购买</el-button></el-col>
+                        <el-col :span="12">
+                            <el-button
                             size="mini"
                             type="primary"
-                            @click="toDetail(scope.$index, scope.row)">查看详情</el-button></el-col>
+                            @click="toDetail(scope.$index, scope.row)">拒绝购买</el-button></el-col>
                     </el-row>
                     <div slot="reference" class="name-wrapper">
                         <el-tag size="medium">详情</el-tag>
@@ -160,7 +150,8 @@ export default {
     },
     data() {
         return {
-            ststatus: [{label:'正常', value:'正常'},{label:'报修', value:'报修'},{label:'报废', value:'报废'}],
+            ststatus: [{label:'待处理', value:'待处理'},{label:'待购买', value:'待购买'},
+                {label:'已购买', value:'已购买'},{label:'拒绝', value:'拒绝'}],
             dialogVisibleRepair: false,
             dialogVisibleScrap: false,
             search:{

@@ -1,10 +1,15 @@
-import cs from '@/components/addDev/add'
-
+import repairDev from '@/components/repairDev/list'
+import isRepair from '@/components/repairDev/isRepair'
 
 export default [
     {
-        path:"/addDev/add",
-        component:cs,
+        path:"/repairDev/list",
+        component:repairDev,
+    },
+    {
+        path:"/repairDev/isRepair",
+        component:isRepair,
     }
+
 
 ]

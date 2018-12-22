@@ -1,10 +1,15 @@
-import cs from '@/components/addDev/add'
-
+import scrapDev from '@/components/scrapDev/list'
+import isScrap from '@/components/scrapDev/isScrap'
 
 export default [
     {
-        path:"/addDev/add",
-        component:cs,
+        path:"/scrapDev/list",
+        component:scrapDev,
+    },
+    {
+        path:"/scrapDev/isScrap",
+        component:isScrap,
     }
+
 
 ]

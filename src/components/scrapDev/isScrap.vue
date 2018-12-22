@@ -9,7 +9,7 @@
       </el-header>
       <main style="text-align:left;">
         <el-form :label-position="labelPosition" label-width="110px" :inline="true" :model="kcChange">
-            <el-form-item label="类别">
+            <el-form-item label="报废日期">
                 <el-input v-model="kcChange" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="设备名">
@@ -20,49 +20,22 @@
             </el-form-item>
         </el-form>
         <el-form :inline="true">
-            <el-form-item label="型号" label-width="110px">
+            <el-form-item label="责任人" label-width="110px">
                 <el-input v-model="kcChange"></el-input>
             </el-form-item>
 
-            <el-form-item label="规格" label-width="110px">
+            <el-form-item label="审批状态" label-width="110px">
                 <el-input v-model="kcChange.xf"></el-input>
             </el-form-item>
 
         </el-form>
-        <el-form :inline="true" label-width="110px">
-            <el-form-item label="单价">
-                <el-input v-model="kcChange.sjxs2"></el-input>
-            </el-form-item>
-            <el-form-item label="数量">
-                <el-input v-model="kcChange.kwxs"></el-input>
-            </el-form-item>
 
-        </el-form>
-        <el-form :inline="true" label-width="110px">
-            <el-form-item label="购置单价">
-                <el-input v-model="kcChange.llxs"></el-input>
-            </el-form-item>
-            <el-form-item label="生成厂家">
-                <el-input v-model="kcChange.syxs"></el-input>
-            </el-form-item>
-            <el-form-item label="保质期">
-                <el-input v-model="kcChange.xydm"></el-input>
-            </el-form-item>
 
-        </el-form>
-        <el-form :inline="true" label-width="110px">
-
-            <el-form-item label="经办人">
-                <el-input v-model="kcChange.sjxs"></el-input>
-            </el-form-item>
-            <el-form-item label="设备当前状态">
-                <el-input v-model="kcChange.sjzs"></el-input>
-            </el-form-item>
-        </el-form>
         
         <el-form :inline="true" size="mini" style="text-align:center;">
-            <el-button type="primary" @click="button_click('repair')">报修</el-button>
-            <el-button type="primary" @click="button_click('scrap')">报废</el-button>
+            
+            <el-button type="primary" @click="button_click('repair')">拒绝报废</el-button>
+            <el-button type="primary" @click="button_click('repair')">同意报废</el-button>
             <el-button type="primary" @click="button_click('return')">返回</el-button>
         </el-form>
       </main>

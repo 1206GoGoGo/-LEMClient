@@ -3,7 +3,7 @@
       <el-header class="header-path" style="height:40px;">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>设备列表</el-breadcrumb-item>
+          <el-breadcrumb-item>修理设备列表</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
     <div style="margin-bottom:10px; text-align:left;">
@@ -15,6 +15,17 @@
                 :value="item.value">
             </el-option>
         </el-select>
+
+        <el-date-picker
+            v-model="value7"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="pickerOptions2">
+        </el-date-picker>
         <el-input
             style="width:180px"
             placeholder="请输入查询信息"
@@ -37,7 +48,7 @@
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
             prop="xqdm"
-            label="类别"
+            label="修理日期"
             sortable>
         </el-table-column>
         <el-table-column
@@ -53,67 +64,37 @@
         </el-table-column>
         <el-table-column
             prop="xqdm"
-            label="型号"
+            label="修理厂家"
             sortable>
         </el-table-column>
         <el-table-column
             prop="xqmc"
-            label="规格"
+            label="修理费用"
             sortable>
         </el-table-column>
         <el-table-column
             prop="xqjp"
-            label="单价"
+            label="责任人"
             sortable>
         </el-table-column>
         <el-table-column
             prop="xqjp"
-            label="数量"
+            label="修理状态"
             sortable>
         </el-table-column>
-        <el-table-column
-            prop="xqdm"
-            label="购置日期"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="xqmc"
-            label="生产厂家"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="xqjp"
-            label="保质期"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            :formatter="stateFormatter"
-            prop="zt"
-            label="经办人"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            :formatter="stateFormatter"
-            prop="zt"
-            label="设备当前状态"
-            sortable>
-        </el-table-column>
+       
         <el-table-column label="操作" width="160px">
 
             <template slot-scope="scope">
                 <el-popover trigger="hover" placement="top">
                     <el-row>
-                        <el-col :span="8"><el-button
+                        <el-col :span="12"><el-button
                             size="mini"
-                            @click="handleRepair(scope.$index, scope.row)">报修</el-button></el-col>
-                        <el-col :span="8"><el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleScrap(scope.$index, scope.row)">报费</el-button></el-col>
-                        <el-col :span="8"><el-button
+                            @click="handleRepair(scope.$index, scope.row)">处理修理</el-button></el-col>
+                        <el-col :span="12"><el-button
                             size="mini"
                             type="primary"
-                            @click="toDetail(scope.$index, scope.row)">查看详情</el-button></el-col>
+                            @click="toDetail(scope.$index, scope.row)">查看设备详情</el-button></el-col>
                     </el-row>
                     <div slot="reference" class="name-wrapper">
                         <el-tag size="medium">详情</el-tag>
@@ -160,7 +141,7 @@ export default {
     },
     data() {
         return {
-            ststatus: [{label:'正常', value:'正常'},{label:'报修', value:'报修'},{label:'报废', value:'报废'}],
+            ststatus: [{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
             dialogVisibleRepair: false,
             dialogVisibleScrap: false,
             search:{
@@ -168,6 +149,42 @@ export default {
                 key:''
             },
             tableData:[],
+
+
+
+
+
+        pickerOptions2: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        value7: ''
+
+
+        
         }
     },
     methods: {

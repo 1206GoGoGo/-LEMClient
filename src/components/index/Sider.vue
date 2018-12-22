@@ -15,7 +15,7 @@
             <template   slot="title"><i class="el-icon-setting"></i>设备申请管理</template>   
                 <el-menu-item index="1-1">- -设备申请</el-menu-item>
                 <el-menu-item index="1-2">- -申请记录</el-menu-item>
-                <el-menu-item index="1-3">- -处理申请</el-menu-item>
+                <!--el-menu-item index="1-3">- -处理申请</el-menu-item-->
        </el-submenu>
 
         <el-submenu index="2">
@@ -26,14 +26,14 @@
         <el-submenu index="3">
             <template   slot="title"><i class="el-icon-menu"></i>设备修理管理</template>  
             <el-menu-item index="3-1">- -修理记录</el-menu-item>
-            <el-menu-item index="3-2">- -设备报修</el-menu-item>  <!--跳转到现存设备列表进行处理-->
+            <!--el-menu-item index="3-2">- -设备报修</el-menu-item-->  <!--跳转到现存设备列表进行处理-->
             <el-menu-item index="3-3">- -更改修理进度</el-menu-item>            
        </el-submenu>
 
         <el-submenu index="4">
             <template  slot="title"><i class="el-icon-menu"></i>报废设备管理</template>  
             <el-menu-item index="4-1">- -报废记录</el-menu-item>
-            <el-menu-item index="4-2">- -申请报废</el-menu-item>  <!--跳转到现存设备列表进行处理-->
+            <!--el-menu-item index="4-2">- -申请报废</el-menu-item-->  <!--跳转到现存设备列表进行处理-->
             <el-menu-item index="4-3">- -报废审批</el-menu-item>
        </el-submenu>
 
@@ -65,6 +65,18 @@ export default {
             {
                 //通过index来控制路由跳转
                 case "1-1":locthis.$router.push({path:'/addDev/add'});break;
+                case "1-2":locthis.$router.push({path:'/addDev/list'});break;
+
+                case "2-1":locthis.$router.push({path:'/manageDev/list'});break;
+
+
+                case "3-1":locthis.$router.push({path:'/repairDev/list'});break;
+                //case "3-2":locthis.$router.push({path:'/manageDev/list'});break;
+                case "3-3":locthis.$router.push({path:'/repairDev/isRepair'});break;
+
+                case "4-1":locthis.$router.push({path:'/scrapDev/list'});break;
+                //case "4-2":locthis.$router.push({path:'/manageDev/list'});break;
+                case "4-3":locthis.$router.push({path:'/scrapDev/isScrap'});break;
 
                 
                 default:console.log("跳转错误");
