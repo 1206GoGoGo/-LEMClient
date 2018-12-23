@@ -79,9 +79,10 @@ export default {
             },
             /*登陆*/
             login(){
-                if(this.Account=="张三"&&this.Password=="123456")
-                alert("登陆成功！")
-                else  alert("账号或密码错误！")
+                this.$router.push({path: '/repaiInfor/scrapMoney'});
+                // if(this.Account=="张三"&&this.Password=="123456")
+                // alert("登陆成功！")
+                // else  alert("账号或密码错误！")
             }
         },
 } 
@@ -101,17 +102,15 @@ export default {
     border-radius: 15px;
     -moz-border-radius: 5px;
     background-clip: padding-box;
-    margin: 100px auto;
-    width: 350px;
+    margin: 80px auto;
+    width: 400px;
     padding: 35px 35px 15px 35px;
-    background: rgba(255,255,255,0.7)
- 
-    ;
+    background: rgba(255,255,255,0.7);
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
 }
-.label{
-    width:50px;
+label{
+    width:100px;
     font-size:large;
     text-align:left;
     color: #00808c;
@@ -128,13 +127,13 @@ export default {
     width:250px;
     text-align:left;
 }
-.forget{
+/* .forget{
     width:500px;
     text-align:right;
     font-size:14px;
     font-family:PingFang SC;
     
-}
+} */
 .remFor{
     margin-bottom: 10px;
     padding-bottom: 10px;

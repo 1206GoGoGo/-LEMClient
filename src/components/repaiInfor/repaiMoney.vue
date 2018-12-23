@@ -1,34 +1,38 @@
 <template>
     <el-container>
-      <el-header class="header-path" style="height:40px;">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>信息统计</el-breadcrumb-item>
-        </el-breadcrumb>
-      </el-header>
-    <div style="margin-bottom:10px; text-align:left;">
-
-        <el-date-picker
-            v-model="value7"
-            type="daterange"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions2">
-        </el-date-picker>
-        <el-input
-            style="width:180px"
-            placeholder="请输入查询信息"
-            v-model="search.key"
-            clearable>
-        </el-input>
-        <!--下拉列表框 结束-->
-        <el-button type="primary" plain>查询</el-button>
-        <div style="display:inline-block;"><el-alert title="通过选择设备状态或者设备关键字查询相关信息" type="success"></el-alert></div>
-        
-    </div>
+        <el-header class="header-path" style="height:40px;">
+            <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>信息统计</el-breadcrumb-item>
+            <el-breadcrumb-item>维修费用信息</el-breadcrumb-item>
+            </el-breadcrumb>
+        </el-header>
+        <div style="margin-bottom:10px; text-align:left;">  
+            <el-date-picker
+                v-model="value7"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :picker-options="pickerOptions2">
+            </el-date-picker>
+            <el-input
+                style="width:180px"
+                placeholder="请输入设备名称"
+                v-model="search.key"
+                clearable>
+            </el-input>
+            总金额:
+            <el-input
+                style="width:180px"
+                placeholder=""
+                clearable>
+            </el-input>
+            <el-button type="primary" plain>查询</el-button>
+        </div>
+        <!-- slot="empty" 表格无数据不漏出来 -->
     <el-table
         stripe
         border
@@ -36,68 +40,43 @@
         @row-click="handleCurrentChange"
         height="350px"
         :data="tableData"
+        slot="empty" 
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
-            prop="xqdm"
-            label="修理日期"
+            prop="sbbh"
+            label="设备编号"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqmc"
-            label="设备名"
+            prop="sbmc"
+            label="设备名称"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqdm"
-            label="编号"
-            sortable
-            >
-        </el-table-column>
-        <el-table-column
-            prop="xqdm"
+            prop="xlcj"
             label="修理厂家"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqmc"
-            label="修理费用"
+            prop="wxrq"
+            label="维修日期"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="xlsl"
             label="责任人"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
-            label="修理状态"
-            sortable>
-        </el-table-column>
-       
-        <el-table-column label="操作" width="160px">
-
-            <template slot-scope="scope">
-                <el-popover trigger="hover" placement="top">
-                    <el-row>
-                        <el-col :span="12"><el-button
-                            size="mini"
-                            @click="handleRepair(scope.$index, scope.row)">处理修理</el-button></el-col>
-                        <el-col :span="12"><el-button
-                            size="mini"
-                            type="primary"
-                            @click="toDetail(scope.$index, scope.row)">查看设备详情</el-button></el-col>
-                    </el-row>
-                    <div slot="reference" class="name-wrapper">
-                        <el-tag size="medium">详情</el-tag>
-                    </div>
-                </el-popover>
-            </template>
+            prop="xlfy"
+            label="修理费用"
+            sortable
+            >
         </el-table-column>
     </el-table>
-    
 
-    <el-dialog
+    <!-- <el-dialog
         title="报修申请提交确认"
         :visible.sync="dialogVisibleRepair"
         width="30%"
@@ -119,9 +98,7 @@
             <el-button @click="dialogVisibleScrap = false">取 消</el-button>
             <el-button type="primary" @click="okScrap()">确 定</el-button>
         </span>
-    </el-dialog>
-
-
+    </el-dialog> -->
 
     </el-container>
 </template>
@@ -141,10 +118,6 @@ export default {
                 key:''
             },
             tableData:[],
-
-
-
-
 
         pickerOptions2: {
           shortcuts: [{
@@ -174,9 +147,6 @@ export default {
           }]
         },
         value7: ''
-
-
-        
         }
     },
     methods: {
@@ -188,9 +158,6 @@ export default {
       },
       handleRepair(index, row) {
         this.dialogVisibleRepair = true;
-        //this.$router.replace({name: 'xqdmRightForm',
-        //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-            ////通过改变每次的参数解决路由跳转失效的问题
       },
       okRepair(){
             this.dialogVisibleRepair = false;
@@ -198,8 +165,6 @@ export default {
                 message: '报修成功',
                 type: 'success'
                 });
-        //    this.$router.replace({name: 'xqdmRightForm',
-        //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
       },
       handleScrap(index, row) {
         this.dialogVisibleScrap = true;
@@ -228,7 +193,7 @@ export default {
           })
           .catch(_ => {});
       },
-      getData(){
+        getData(){
             var _this=this;
             //需要处理异步请求的问题
             this.axios.get('SysXq/getAll')
@@ -241,8 +206,8 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                     _this.tableData=[{xqdm:"12"}];
-                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
-                });
+                //alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+            }); 
       }
     }
 }

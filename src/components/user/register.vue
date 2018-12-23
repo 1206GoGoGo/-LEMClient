@@ -51,7 +51,7 @@ export default {
                     top:"0px",
                     left:"0px",
                     width: "100%",
-                    height:"1000px",
+                    height:"100%",
                     backgroundImage: "url(" + require("../../assets/beijing1.jpg") + ")",
                     backgroundSize: "100% 100%",
                     backgroundRepeat: "no-repeat",
@@ -76,12 +76,11 @@ export default {
         methods:{
             /*注册*/
             register(){
-
                 this.$router.push({path: '/user/register'});
             },
             /*登陆*/
             cancel(){
-               this.$router.push({path: '/user/login'});
+               this.$router.push({path: '/repaiInfor/scrapMoney'});
             }
         },
 } 
@@ -104,12 +103,10 @@ export default {
     border-radius: 15px;
     -moz-border-radius: 5px;
     background-clip: padding-box;
-    margin: 40px auto;
+    margin: 80px auto;
     width: 400px;
     padding: 35px 35px 15px 35px;
-    background: rgba(255,255,255,0.7)
- 
-    ;
+    background: rgba(255,255,255,0.7);
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
 }
@@ -131,13 +128,13 @@ label{
     width:250px;
     text-align:left;
 }
-.forget{
+/* .forget{
     width:500px;
     text-align:right;
     font-size:14px;
     font-family:PingFang SC;
     
-}
+} */
 .remFor{
     margin-bottom: 10px;
     padding-bottom: 10px;
@@ -149,5 +146,4 @@ label{
     text-align:center;
     font-size:25px;
 }
- 
 </style>

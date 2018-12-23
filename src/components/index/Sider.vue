@@ -1,5 +1,5 @@
 <template>
-<div class="sider">
+<div class="sider" style="display:none;">
     <div class="title-area">
         <img class="whut-logo" src="../../assets/whut-logo.png">
         <span class="whut-title-area">
