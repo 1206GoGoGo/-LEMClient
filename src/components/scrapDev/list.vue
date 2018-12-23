@@ -56,6 +56,11 @@
             sortable>
         </el-table-column>
         <el-table-column
+            prop="xqmc"
+            label="设备价格"
+            sortable>
+        </el-table-column>
+        <el-table-column
             prop="xqdm"
             label="编号"
             sortable

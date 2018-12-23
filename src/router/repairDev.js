@@ -9,6 +9,7 @@ export default [
     {
         path:"/repairDev/isRepair",
         component:isRepair,
+        name:'isRepair'
     }
 
 

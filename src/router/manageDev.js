@@ -9,6 +9,7 @@ export default [
     },
     {
         path:"/manageDev/detail",
-        component: manageDetail
+        component: manageDetail,
+        name: 'manageDetail'
     }
 ]

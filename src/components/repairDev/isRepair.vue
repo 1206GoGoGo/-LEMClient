@@ -86,19 +86,6 @@ export default {
             labelPosition: 'right',
             //kcChange: this.$route.params.val,
             kcChange:{},
-            kclbList:[],
-            kcxzList:[],
-            xxgsList:[],
-            xyList:[],
-            ztList:[
-                {
-                    label:"课程停开" ,
-                    value:0
-                },{
-                    label:"正常开课" ,
-                    value:1
-                }
-            ],
             dialogVisibleRepair: false,
             dialogVisibleScrap: false
         };
@@ -126,14 +113,6 @@ export default {
                 });
         //    this.$router.replace({name: 'xqdmRightForm',
         //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-        },
-
-        okScrap(){
-            this.dialogVisibleScrap = false;
-            this.$message({
-                    message: '申请成功',
-                    type: 'success'
-                    });
         },
 
 

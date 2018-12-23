@@ -17,13 +17,14 @@
         </el-select>
 
         <el-date-picker
-            v-model="value7"
+            v-model="search.data"
             type="daterange"
             align="right"
             unlink-panels
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
             :picker-options="pickerOptions2">
         </el-date-picker>
         <el-input
@@ -33,7 +34,7 @@
             clearable>
         </el-input>
         <!--下拉列表框 结束-->
-        <el-button type="primary" plain>查询</el-button>
+        <el-button type="primary" plain @click="getData()">查询</el-button>
         <div style="display:inline-block;"><el-alert title="通过选择设备状态或者设备关键字查询相关信息" type="success"></el-alert></div>
         
     </div>
@@ -84,52 +85,14 @@
         </el-table-column>
        
         <el-table-column label="操作" width="160px">
-
             <template slot-scope="scope">
-                <el-popover trigger="hover" placement="top">
-                    <el-row>
-                        <el-col :span="12"><el-button
-                            size="mini"
-                            @click="handleRepair(scope.$index, scope.row)">处理修理</el-button></el-col>
-                        <el-col :span="12"><el-button
-                            size="mini"
-                            type="primary"
-                            @click="toDetail(scope.$index, scope.row)">查看设备详情</el-button></el-col>
-                    </el-row>
-                    <div slot="reference" class="name-wrapper">
-                        <el-tag size="medium">详情</el-tag>
-                    </div>
-                </el-popover>
+                <el-button
+                    size="mini"
+                    @click="handleRepair(scope.row)">处理修理
+                </el-button>
             </template>
         </el-table-column>
     </el-table>
-    
-
-    <el-dialog
-        title="报修申请提交确认"
-        :visible.sync="dialogVisibleRepair"
-        width="30%"
-        :before-close="handleClose">
-        <span>确认申请后会将报修申请发送到相关负责人！</span>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisibleRepair = false">取 消</el-button>
-            <el-button type="primary" @click="okRepair()">确 定</el-button>
-        </span>
-    </el-dialog>
-
-    <el-dialog
-        title="报废申请提交确认"
-        :visible.sync="dialogVisibleScrap"
-        width="30%"
-        :before-close="handleClose">
-        <span>确认申请后会将报废申请发送到相关负责人！<br>管理人员会对报废进行审核！</span>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisibleScrap = false">取 消</el-button>
-            <el-button type="primary" @click="okScrap()">确 定</el-button>
-        </span>
-    </el-dialog>
-
-
 
     </el-container>
 </template>
@@ -142,17 +105,15 @@ export default {
     data() {
         return {
             ststatus: [{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
-            dialogVisibleRepair: false,
-            dialogVisibleScrap: false,
+
             search:{
+                data:'',
                 status:'',
-                key:''
+                key:'',
+                timeStart:'',
+                timeEnd:''
             },
             tableData:[],
-
-
-
-
 
         pickerOptions2: {
           shortcuts: [{
@@ -180,11 +141,8 @@ export default {
               picker.$emit('pick', [start, end]);
             }
           }]
-        },
-        value7: ''
+        }
 
-
-        
         }
     },
     methods: {
@@ -194,49 +152,26 @@ export default {
       handleCurrentChange(val) {
         this.currentRow = val;
       },
-      handleRepair(index, row) {
-        this.dialogVisibleRepair = true;
-        //this.$router.replace({name: 'xqdmRightForm',
-        //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-            ////通过改变每次的参数解决路由跳转失效的问题
-      },
-      okRepair(){
-            this.dialogVisibleRepair = false;
-            this.$message({
-                message: '报修成功',
-                type: 'success'
-                });
-        //    this.$router.replace({name: 'xqdmRightForm',
-        //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-      },
-      handleScrap(index, row) {
-        this.dialogVisibleScrap = true;
-      },
-      okScrap(){
-          this.dialogVisibleScrap = false;
-          this.$message({
-                message: '申请成功',
-                type: 'success'
-                });
-      },
-      toDetail(index, row) {
-            this.$router.push({path: '/manageDev/detail',
-                params:{ val:row ,id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-      },
-      //将数据库存储的状态数值，格式化为汉字
-      stateFormatter(row,column){
-        let state = row.state;
-        if(state === '0'){return '是'} else {return '否'}
+      handleRepair(row) {
+        this.$router.replace({name: 'isRepair', params:{ val:row }});
       },
 
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
       getData(){
+          alert(this.search.data.toString.split(",")[1]);
+
+            if(!this.search.status){
+                var status = '0';
+            }
+            if(!this.search.key){
+                var key = '0';
+            }
+            if(!this.search.data){
+                var timeStart = '0';
+                var timeEnd = '0';
+            }else{
+                var timeStart = '0';
+                var timeEnd = '0';
+            }
             var _this=this;
             //需要处理异步请求的问题
             this.axios.get('SysXq/getAll')

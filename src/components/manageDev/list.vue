@@ -22,7 +22,7 @@
             clearable>
         </el-input>
         <!--下拉列表框 结束-->
-        <el-button type="primary" plain>查询</el-button>
+        <el-button type="primary" plain @click="getData()">查询</el-button>
         <div style="display:inline-block;"><el-alert title="通过选择设备状态或者设备关键字查询相关信息" type="success"></el-alert></div>
         
     </div>
@@ -34,67 +34,67 @@
         height="350px"
         :data="tableData"
         style="width: 100%"
-        :default-sort = "{prop: 'xqdm', order: 'descending'}">
+        :default-sort = "{prop: 'id', order: 'descending'}">
         <el-table-column
-            prop="xqdm"
+            prop="category"
             label="类别"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqmc"
+            prop="name"
             label="设备名"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqdm"
+            prop="id"
             label="编号"
             sortable
             >
         </el-table-column>
         <el-table-column
-            prop="xqdm"
+            prop="type"
             label="型号"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqmc"
+            prop="size"
             label="规格"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="price"
             label="单价"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="count"
             label="数量"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqdm"
+            prop="data"
             label="购置日期"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqmc"
+            prop="manufacturer"
             label="生产厂家"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="expirationDate"
             label="保质期"
             sortable>
         </el-table-column>
         <el-table-column
             :formatter="stateFormatter"
-            prop="zt"
+            prop="operator"
             label="经办人"
             sortable>
         </el-table-column>
         <el-table-column
             :formatter="stateFormatter"
-            prop="zt"
+            prop="status"
             label="设备当前状态"
             sortable>
         </el-table-column>
@@ -105,15 +105,15 @@
                     <el-row>
                         <el-col :span="8"><el-button
                             size="mini"
-                            @click="handleRepair(scope.$index, scope.row)">报修</el-button></el-col>
+                            @click="handleRepair( scope.row)">报修</el-button></el-col>
                         <el-col :span="8"><el-button
                             size="mini"
                             type="danger"
-                            @click="handleScrap(scope.$index, scope.row)">报费</el-button></el-col>
+                            @click="handleScrap( scope.row)">报费</el-button></el-col>
                         <el-col :span="8"><el-button
                             size="mini"
                             type="primary"
-                            @click="toDetail(scope.$index, scope.row)">查看详情</el-button></el-col>
+                            @click="toDetail( scope.row)">查看详情</el-button></el-col>
                     </el-row>
                     <div slot="reference" class="name-wrapper">
                         <el-tag size="medium">详情</el-tag>
@@ -168,6 +168,8 @@ export default {
                 key:''
             },
             tableData:[],
+            idNow:'',
+            nameNow:''
         }
     },
     methods: {
@@ -177,39 +179,58 @@ export default {
       handleCurrentChange(val) {
         this.currentRow = val;
       },
-      handleRepair(index, row) {
+      handleRepair(row) {
+        this.idNow = row.id;
+        this.nameNow = row.name;
         this.dialogVisibleRepair = true;
-        //this.$router.replace({name: 'xqdmRightForm',
-        //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-            ////通过改变每次的参数解决路由跳转失效的问题
       },
-      okRepair(){
-            this.dialogVisibleRepair = false;
-            this.$message({
-                message: '报修成功',
-                type: 'success'
-                });
-        //    this.$router.replace({name: 'xqdmRightForm',
-        //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-      },
-      handleScrap(index, row) {
+      handleScrap(row) {
+        this.idNow = row.id;
+        this.nameNow = row.name;
         this.dialogVisibleScrap = true;
       },
-      okScrap(){
-          this.dialogVisibleScrap = false;
-          this.$message({
-                message: '申请成功',
-                type: 'success'
+      okRepair(){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('SysXq/getAll?id='+ _this.idNow+'&responsible='+ '责任人--待处理'+'&name='+_this.nameNow )
+                .then(function (response) {
+                    alert(response.data);
+                    if(response.data=='success'){
+                        _this.$message({
+                            message: '报修成功',
+                            type: 'success'
+                            });
+                        _this.$router.replace({path: '/repairDev/list'});
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
+            this.dialogVisibleRepair = false;
       },
-      toDetail(index, row) {
-            this.$router.push({path: '/manageDev/detail',
-                params:{ val:row ,id: row.xqdm+new Date().getSeconds(), type: 'change'}});
+      okScrap(){
+            var _this=this;
+            //需要处理异步请求的问题
+            this.axios.get('SysXq/getAll?id='+ _this.idNow +'&responsible='+ '责任人--待处理')
+                .then(function (response) {
+                    alert(response.data);
+                    if(response.data=='success'){
+                        _this.$message({
+                            message: '提交报废申请成功',
+                            type: 'success'
+                            });
+                        _this.$router.replace({path: '/scrapDev/list'});
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
+            this.dialogVisibleScrap = false;
       },
-      //将数据库存储的状态数值，格式化为汉字
-      stateFormatter(row,column){
-        let state = row.state;
-        if(state === '0'){return '是'} else {return '否'}
+      toDetail(row) {
+        this.$router.push({name: 'manageDetail', params:{ val:row }});
       },
 
       handleClose(done) {
@@ -220,19 +241,28 @@ export default {
           .catch(_ => {});
       },
       getData(){
+            if(!this.search.status){
+                var status = '0';
+            }
+            if(!this.search.key){
+                var key = '0';
+            }
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll')
+            this.axios.get('SysXq/getAll?status='+status+'&info='+key)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
+                    _this.$message({
+                        message: '查询成功',
+                        type: 'success'
+                        });
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.tableData=[{xqdm:"12"}];
-                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                    alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
       }
     }
