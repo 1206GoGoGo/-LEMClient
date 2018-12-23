@@ -3,20 +3,19 @@
       <el-header class="header-path">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>器材查看</el-breadcrumb-item>
-          <el-breadcrumb-item>{当前器材</el-breadcrumb-item>
+          <el-breadcrumb-item>处理修理信息</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <main style="text-align:left;">
         <el-form :label-position="labelPosition" label-width="110px" :inline="true" :model="kcChange">
             <el-form-item label="修理日期">
-                <el-input v-model="kcChange" :disabled="true"></el-input>
+                <el-input v-model="kcChange"></el-input>
             </el-form-item>
             <el-form-item label="设备名">
                 <el-input v-model="kcChange"></el-input>
             </el-form-item>
             <el-form-item label="编号">
-                <el-input v-model="kcChange"></el-input>
+                <el-input v-model="kcChange" :disabled="true"></el-input>
             </el-form-item>
         </el-form>
         <el-form :inline="true">
@@ -78,14 +77,12 @@
 <script>
 
 export default {
-//上面选修课程性质用的都是名称！！！！！！！！！！-----------json数据中是名称，数据库中存的什么待处理
     name: "detail",
 
     data() {
         return {
             labelPosition: 'right',
-            //kcChange: this.$route.params.val,
-            kcChange:{},
+            kcChange: this.$route.params.val,
             dialogVisibleRepair: false,
             dialogVisibleScrap: false
         };
@@ -93,10 +90,9 @@ export default {
     methods: {
         button_click(kind){
             if(kind=='return'){
-                this.$router.push({path: '/manageDev/list'});
+                this.$router.push({path: '/repairDev/list'});
                 return;
             }else if(kind=='repair'){
-                        //
                 this.dialogVisibleRepair = true;
                 //this.$router.replace({name: 'xqdmRightForm',
                 //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});

@@ -48,38 +48,38 @@
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
-            prop="xqdm"
+            prop="date"
             label="修理日期"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqmc"
+            prop="name"
             label="设备名"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqdm"
+            prop="equId"
             label="编号"
             sortable
             >
         </el-table-column>
         <el-table-column
-            prop="xqdm"
+            prop="repairFactory"
             label="修理厂家"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqmc"
+            prop="cost"
             label="修理费用"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="responsible"
             label="责任人"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="xqjp"
+            prop="status"
             label="修理状态"
             sortable>
         </el-table-column>
@@ -157,7 +157,6 @@ export default {
       },
 
       getData(){
-          alert(this.search.data.toString.split(",")[1]);
 
             if(!this.search.status){
                 var status = '0';
@@ -169,12 +168,12 @@ export default {
                 var timeStart = '0';
                 var timeEnd = '0';
             }else{
-                var timeStart = '0';
-                var timeEnd = '0';
+                var timeStart = this.search.data.toString().split(',')[0];
+                var timeEnd = this.search.data.toString().split(',')[1];
             }
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll')
+            this.axios.get('SysXq/getAll?status='+status+'&info='+key+'&timeStart='+timeStart+'&timeEnd='+timeEnd)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
