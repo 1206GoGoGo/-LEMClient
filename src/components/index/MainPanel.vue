@@ -1,5 +1,5 @@
 <template>
-    <el-container class="main-panel" style="left:0;">
+    <el-container class="main-panel" style="left:30;">
         <el-main>
             <router-view>
             </router-view>
