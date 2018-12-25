@@ -133,7 +133,8 @@ export default {
 <style scoped>
 
     .login-bg{
-        border:1px solid red;
+        border:0px solid red;
+        position:absolute;
         height:100%;
         width:100%;
         background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
@@ -163,9 +164,7 @@ export default {
          background-size:400px 450px;
          background-position: 0px -70px;
      }
-    .center-inner-right{
 
-    }
     .sys-title{
         height:100px;
         line-height:100px;

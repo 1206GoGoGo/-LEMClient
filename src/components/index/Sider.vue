@@ -8,7 +8,7 @@
         </span>
     </div>
 <!-- 00808c -->
-    <span style="color:#ffffff;">当前登陆用户：王立军</span>
+    <span style="color:#ffffff;">当前登陆用户：{{getUsername}}</span>
    <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#004d99" text-color="#fff" active-text-color="#fff">
       
         <el-submenu index=1>
@@ -63,7 +63,11 @@ export default {
             
         }
     },
-
+    computed:{
+        getUsername(){
+            return this.$store.state.user.username;
+        }
+    },
     methods:{
         //路由跳转处理
         handleSelect:function(index,indexpath){
