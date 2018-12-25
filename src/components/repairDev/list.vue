@@ -48,6 +48,7 @@
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
+            :formatter="dateFormatter"
             prop="date"
             label="修理日期"
             sortable>
@@ -58,13 +59,13 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="equId"
+            prop="equid"
             label="编号"
             sortable
             >
         </el-table-column>
         <el-table-column
-            prop="repairFactory"
+            prop="repairfactory"
             label="修理厂家"
             sortable>
         </el-table-column>
@@ -104,7 +105,7 @@ export default {
     },
     data() {
         return {
-            ststatus: [{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
+            ststatus: [{label:'全部', value:'0'},{label:'没修好', value:'没修好'},{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
 
             search:{
                 data:'',
@@ -149,6 +150,15 @@ export default {
       formatter(row, column) {
         return row.address;
       },
+            
+      add0(m){return m<10?'0'+m:m },
+      dateFormatter(row,column){
+            var expirationdate = new Date(parseInt(row.date));
+            var year=expirationdate.getFullYear();
+            var month=expirationdate.getMonth()+1;
+            var day=expirationdate.getDate();
+            return year+"-"+this.add0(month)+"-"+this.add0(day);
+      },
       handleCurrentChange(val) {
         this.currentRow = val;
       },
@@ -160,10 +170,10 @@ export default {
 
             if(!this.search.status){
                 var status = '0';
-            }
+            }else{var status = this.search.status;}
             if(!this.search.key){
                 var key = '0';
-            }
+            }else{var key = this.search.key;}
             if(!this.search.data){
                 var timeStart = '0';
                 var timeEnd = '0';
@@ -173,7 +183,7 @@ export default {
             }
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?status='+status+'&info='+key+'&timeStart='+timeStart+'&timeEnd='+timeEnd)
+            this.axios.get('repair/find?status='+status+'&info='+key+'&timeStart='+timeStart+'&timeEnd='+timeEnd)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
@@ -182,7 +192,6 @@ export default {
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.tableData=[{xqdm:"12"}];
                 alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
       }

@@ -40,7 +40,7 @@
                 <el-input v-model="addBuy.manufacturer"></el-input>
             </el-form-item>
             <el-form-item label="保质期">
-                <el-input v-model="addBuy.expirationDate"></el-input>
+                <el-input v-model="addBuy.expirationdate"></el-input>
             </el-form-item>
 
         </el-form>
@@ -91,7 +91,7 @@ export default {
             var _this=this;
             //需要处理异步请求的问题
 
-            this.axios.post('SysXq/add', _this.addBuy)
+            this.axios.post('buy/add', _this.addBuy)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
