@@ -23,6 +23,7 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
             :picker-options="pickerOptions2">
         </el-date-picker>
         <el-input
@@ -41,7 +42,7 @@
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="550px"
+        :height="tableHeight"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
@@ -99,6 +100,7 @@ export default {
     },
     data() {
         return {
+            tableHeight: window.innerHeight * 0.8 ,
             ststatus: [{label:'全部', value:'0'},{label:'审批拒绝', value:'审批拒绝'},{label:'待审批', value:'待审批'},{label:'审批通过', value:'审批通过'}],
             search:{
                 data:'',

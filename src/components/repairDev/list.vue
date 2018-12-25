@@ -43,7 +43,7 @@
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="550px"
+        :height="tableHeight"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
@@ -106,6 +106,7 @@ export default {
     },
     data() {
         return {
+            tableHeight: window.innerHeight * 0.8 ,
             ststatus: [{label:'全部', value:'0'},{label:'没修好', value:'没修好'},{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
 
             search:{

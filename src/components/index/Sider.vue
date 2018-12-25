@@ -60,7 +60,7 @@ export default {
     name:"sider",
     data:function(){
         return {
-            
+            name:this.$store.data.user.username
         }
     },
     computed:{
@@ -101,6 +101,11 @@ export default {
             }
         }
 
+    },
+    computed:{
+        getUsername(){
+            return this.$store.state.user.username;
+        }
     }
 }
 </script>
