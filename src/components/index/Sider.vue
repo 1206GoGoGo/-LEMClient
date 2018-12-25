@@ -62,6 +62,7 @@ export default {
         return {
         }
     },
+
     methods:{
         //路由跳转处理
         handleSelect:function(index,indexpath){
