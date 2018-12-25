@@ -31,7 +31,7 @@
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="350px"
+        height="550px"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'id', order: 'descending'}">
@@ -70,6 +70,7 @@
         <el-table-column
             :formatter="buydateFormatter"
             prop="date"
+            width="120px"
             label="购置日期"
             sortable>
         </el-table-column>
@@ -81,6 +82,7 @@
         <el-table-column
             :formatter="expirationdateFormatter"
             prop="expirationdate"
+            width="120px"
             label="保质期"
             sortable>
         </el-table-column>

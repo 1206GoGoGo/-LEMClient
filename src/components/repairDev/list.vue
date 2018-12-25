@@ -43,13 +43,14 @@
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="350px"
+        height="550px"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
             :formatter="dateFormatter"
             prop="date"
+            width="120px"
             label="修理日期"
             sortable>
         </el-table-column>
