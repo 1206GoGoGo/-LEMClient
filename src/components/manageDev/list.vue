@@ -31,7 +31,7 @@
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="350px"
+        height="550px"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'id', order: 'descending'}">
@@ -66,13 +66,11 @@
             label="单价"
             sortable>
         </el-table-column>
+
         <el-table-column
-            prop="count"
-            label="数量"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="data"
+            :formatter="buydateFormatter"
+            prop="date"
+            width="120px"
             label="购置日期"
             sortable>
         </el-table-column>
@@ -82,7 +80,9 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="expirationDate"
+            :formatter="expirationdateFormatter"
+            prop="expirationdate"
+            width="120px"
             label="保质期"
             sortable>
         </el-table-column>
@@ -160,7 +160,7 @@ export default {
     },
     data() {
         return {
-            ststatus: [{label:'正常', value:'正常'},{label:'报修', value:'报修'},{label:'报废', value:'报废'}],
+            ststatus: [{label:'全部', value:'0'},{label:'正常', value:'正常'},{label:'报修', value:'报修'},{label:'报废', value:'报废'}],
             dialogVisibleRepair: false,
             dialogVisibleScrap: false,
             search:{
@@ -179,6 +179,22 @@ export default {
       handleCurrentChange(val) {
         this.currentRow = val;
       },
+      
+      add0(m){return m<10?'0'+m:m },
+      expirationdateFormatter(row,column){
+            var expirationdate = new Date(parseInt(row.expirationdate));
+            var year=expirationdate.getFullYear();
+            var month=expirationdate.getMonth()+1;
+            var day=expirationdate.getDate();
+            return year+"-"+this.add0(month)+"-"+this.add0(day);
+      },
+      buydateFormatter(row,column){
+            var expirationdate = new Date(parseInt(row.date));
+            var year=expirationdate.getFullYear();
+            var month=expirationdate.getMonth()+1;
+            var day=expirationdate.getDate();
+            return year+"-"+this.add0(month)+"-"+this.add0(day);
+      },
       handleRepair(row) {
         this.idNow = row.id;
         this.nameNow = row.name;
@@ -192,7 +208,7 @@ export default {
       okRepair(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?id='+ _this.idNow+'&responsible='+ '责任人--待处理'+'&name='+_this.nameNow )
+            this.axios.get('equipment/repair?id='+ _this.idNow+'&responsible='+ '责任人--待处理'+'&name='+_this.nameNow )
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
@@ -212,7 +228,7 @@ export default {
       okScrap(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?id='+ _this.idNow +'&responsible='+ '责任人--待处理')
+            this.axios.get('equipment/scrap?id='+ _this.idNow +'&responsible='+ '责任人--待处理'+'&name='+_this.nameNow )
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
@@ -243,13 +259,13 @@ export default {
       getData(){
             if(!this.search.status){
                 var status = '0';
-            }
+            }else{var status = this.search.status}
             if(!this.search.key){
                 var key = '0';
-            }
+            }else{var key = this.search.key}
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?status='+status+'&info='+key)
+            this.axios.get('equipment/find?status='+status+'&info='+key)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去

@@ -5,10 +5,12 @@ export default [
     {
         path:"/scrapDev/list",
         component:scrapDev,
+        name:'scrapDev'
     },
     {
         path:"/scrapDev/isScrap",
         component:isScrap,
+        name:'isScrap'
     }
 
 

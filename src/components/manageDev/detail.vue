@@ -33,20 +33,18 @@
             <el-form-item label="单价">
                 <el-input v-model="tabledetail.price"></el-input>
             </el-form-item>
-            <el-form-item label="数量">
-                <el-input v-model="tabledetail.count"></el-input>
-            </el-form-item>
+
 
         </el-form>
         <el-form :inline="true" label-width="110px">
             <el-form-item label="购置日期">
-                <el-input v-model="tabledetail.data"></el-input>
+                <el-input v-model="tabledetail.date"></el-input>
             </el-form-item>
             <el-form-item label="生成厂家">
                 <el-input v-model="tabledetail.manufacturer"></el-input>
             </el-form-item>
             <el-form-item label="保质期">
-                <el-input v-model="tabledetail.expirationDate"></el-input>
+                <el-input v-model="tabledetail.expirationdate"></el-input>
             </el-form-item>
 
         </el-form>
@@ -100,6 +98,10 @@
 export default {
 //上面选修课程性质用的都是名称！！！！！！！！！！-----------json数据中是名称，数据库中存的什么待处理
     name: "detail",
+    created() {
+        this.tabledetail.date = this.dateFormatter(this.tabledetail.date);
+        this.tabledetail.expirationdate = this.dateFormatter(this.tabledetail.expirationdate);
+    },
     data() {
         return {
             tabledetail: this.$route.params.val,
@@ -122,11 +124,11 @@ export default {
         okRepair(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?id='+ _this.tabledetail.id +'&responsible='+ '责任人--待处理'+'&name='+_this.tabledetail.name )
+            this.axios.get('equipment/repair?id='+ _this.tabledetail.id +'&responsible='+ '责任人--待处理'+'&name='+_this.tabledetail.name )
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
-                        this.$message({
+                        _this.$message({
                             message: '报修成功',
                             type: 'success'
                             });
@@ -137,7 +139,15 @@ export default {
                     alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
             this.dialogVisibleRepair = false;
-        },
+        },      
+      add0(m){return m<10?'0'+m:m },
+      dateFormatter(date){
+            var expirationdate = new Date(parseInt(date));
+            var year=expirationdate.getFullYear();
+            var month=expirationdate.getMonth()+1;
+            var day=expirationdate.getDate();
+            return year+"-"+this.add0(month)+"-"+this.add0(day);
+      },
         handleClose(done) {
             this.$confirm('确认关闭？')
             .then(_ => {
@@ -148,11 +158,11 @@ export default {
         okScrap(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?id='+ _this.tabledetail.id +'&responsible='+ '责任人--待处理')
+            this.axios.get('equipment/scrap?id='+ _this.tabledetail.id +'&responsible='+ '责任人--待处理'+'&name='+_this.tabledetail.name)
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
-                        this.$message({
+                        _this.$message({
                             message: '报修成功',
                             type: 'success'
                             });

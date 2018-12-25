@@ -31,7 +31,7 @@
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="350px"
+        height="550px"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
@@ -77,7 +77,9 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="expirationDate"
+            :formatter="expirationdateFormatter"
+            width="120px"
+            prop="expirationdate"
             label="保质期"
             sortable>
         </el-table-column>
@@ -122,7 +124,7 @@
         :before-close="handleClose">
         <span>确认修改后设备采购状态将会发送给相关负责人！</span>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false ; isModify = false;">取 消</el-button>
+            <el-button @click="dialogVisible = false ;">取 消</el-button>
             <el-button type="primary" @click="okRepair()">确 定</el-button>
         </span>
     </el-dialog>
@@ -138,6 +140,7 @@ export default {
     data() {
         return {
             ststatus: [
+                {label:'全部', value:'0'},
                 {label:'待处理', value:'待处理'},
                 {label:'待购买', value:'待购买'},
                 {label:'已购买', value:'已购买'},
@@ -148,7 +151,10 @@ export default {
                 status:'',
                 key:''
             },
-            isModify: false,
+            changes:{
+                state:'',
+                id:''
+            },
             tableData: [],
         }
     },
@@ -156,18 +162,25 @@ export default {
       formatter(row, column) {
         return row.address;
       },
+      add0(m){return m<10?'0'+m:m },
+      expirationdateFormatter(row,column){
+            var expirationdate = new Date(parseInt(row.expirationdate));
+            var year=expirationdate.getFullYear();
+            var month=expirationdate.getMonth()+1;
+            var day=expirationdate.getDate();
+            return year+"-"+this.add0(month)+"-"+this.add0(day);
+      },
       handleCurrentChange(val) {
         this.currentRow = val;
       },
       handleState(state, row) {
         this.dialogVisible = true;
-        if(isModify){
-            modifyStatus(state, row.id);
-        }
+        this.changes.state = state;
+        this.changes.id = row.id;
       },
       okRepair(){
-            this.isModify = true;
             this.dialogVisible = false;
+            this.modifyStatus(this.changes.state, this.changes.id);
             this.$message({
                 message: '提交成功',
                 type: 'success'
@@ -175,10 +188,17 @@ export default {
         //    this.$router.replace({name: 'xqdmRightForm',
         //    params:{ val:row ,change_id: row.xqdm+new Date().getSeconds(), type: 'change'}});
       },
+        handleClose(done) {
+            this.$confirm('确认关闭？')
+            .then(_ => {
+                done();
+            })
+            .catch(_ => {});
+        },
       modifyStatus(status, id){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?id= '+id+'&status='+status)
+            this.axios.get('buy/modify?id= '+id+'&status='+status)
                 .then(function (response) {
                     alert(response.data);
                 })
@@ -190,19 +210,24 @@ export default {
       getData(){
             if(!this.search.status){
                 var status = '0';
-            }
+            }else{ var status =  this.search.status;}
             if(!this.search.key){
                 var key = '0';
-            }
+            }else{ var key = this.search.key;}
             
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll?status='+status+'&info='+key)
+            this.axios.get('buy/find?status='+status+'&info='+key)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
                     var dataList=response.data;
                     _this.tableData=dataList;
+
+                    _this.$message({
+                            message: '查询成功',
+                            type: 'success'
+                        });
                 })
                 .catch(function (error) {
                     console.log(error);
