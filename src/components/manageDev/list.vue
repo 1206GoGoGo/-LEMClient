@@ -1,12 +1,12 @@
 <template>
     <el-container>
-      <el-header class="header-path" style="height:40px;">
+        <el-header class="header-path" style="height:40px;">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>设备列表</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
-    <div style="margin-bottom:10px; text-align:left;">
+    <div ref="elememt" style="margin-bottom:10px; text-align:left;">
         <!--下拉列表框 开始-->
         <el-select style="width:150px" v-model="search.status" clearable placeholder="请选择设备状态">
             <el-option v-for="item in ststatus"
@@ -31,7 +31,7 @@
         border
         highlight-current-row
         @row-click="handleCurrentChange"
-        height="550px"
+        :height="tableHeight"
         :data="tableData"
         style="width: 100%"
         :default-sort = "{prop: 'id', order: 'descending'}">
@@ -109,7 +109,7 @@
                         <el-col :span="8"><el-button
                             size="mini"
                             type="danger"
-                            @click="handleScrap( scope.row)">报费</el-button></el-col>
+                            @click="handleScrap( scope.row)">报废</el-button></el-col>
                         <el-col :span="8"><el-button
                             size="mini"
                             type="primary"
@@ -160,6 +160,7 @@ export default {
     },
     data() {
         return {
+            tableHeight: window.innerHeight * 0.8 ,
             ststatus: [{label:'全部', value:'0'},{label:'正常', value:'正常'},{label:'报修', value:'报修'},{label:'报废', value:'报废'}],
             dialogVisibleRepair: false,
             dialogVisibleScrap: false,
