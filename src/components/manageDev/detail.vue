@@ -124,7 +124,7 @@ export default {
         okRepair(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('equipment/repair?id='+ _this.tabledetail.id +'&responsible='+ '责任人--待处理'+'&name='+_this.tabledetail.name )
+            this.axios.get('equipment/repair?id='+ _this.tabledetail.id +'&responsible='+  _this.getUsername+'&name='+_this.tabledetail.name )
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
@@ -158,7 +158,7 @@ export default {
         okScrap(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('equipment/scrap?id='+ _this.tabledetail.id +'&responsible='+ '责任人--待处理'+'&name='+_this.tabledetail.name)
+            this.axios.get('equipment/scrap?id='+ _this.tabledetail.id +'&responsible='+  _this.getUsername +'&name='+_this.tabledetail.name)
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
@@ -176,6 +176,11 @@ export default {
         },
 
 
+    },
+    computed:{
+        getUsername(){
+            return this.$store.state.user.username;
+        }
     }
 };
 </script>

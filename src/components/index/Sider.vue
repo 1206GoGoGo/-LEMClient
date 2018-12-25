@@ -60,14 +60,17 @@ export default {
     name:"sider",
     data:function(){
         return {
-            name:this.$store.data.user.username
         }
     },
-
     methods:{
         //路由跳转处理
         handleSelect:function(index,indexpath){
             var locthis=this;
+            
+            if(!locthis.isLogined){
+                this.$router.push({path:'/user/login'});
+                return;
+            }
             switch(index)
             {
                 //通过index来控制路由跳转
@@ -101,7 +104,10 @@ export default {
     computed:{
         getUsername(){
             return this.$store.state.user.username;
-        }
+        },
+        isLogined(){
+            return this.$store.state.isLogined;
+        },
     }
 }
 </script>

@@ -1,5 +1,6 @@
 import login from '@/components/user/login'
 import register from '@/components/user/register'
+import loginsuccess from '@/components/user/loginsuccess'
 
 
 export default [
@@ -8,8 +9,8 @@ export default [
         component:login,
     },
     {
-        path:"/user/register",
-        component:register,
+        path:"/user/loginsuccess",
+        component:loginsuccess,
     },
 
 ]

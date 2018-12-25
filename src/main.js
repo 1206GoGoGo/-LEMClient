@@ -17,8 +17,8 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueAxios,axios);
 //axios相关配置 //更多配置待处理
-//axios.defaults.baseURL = 'http://localhost:8080/lems/';
-axios.defaults.baseURL = 'http://10.139.51.112:8080/lems/';
+axios.defaults.baseURL = 'http://localhost:8080/lems/';
+//axios.defaults.baseURL = 'http://10.139.51.112:8080/lems/';
 
 
 new Vue({
