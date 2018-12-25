@@ -1,6 +1,6 @@
 import login from '@/components/user/login'
 import register from '@/components/user/register'
-import error from '@/components/user/error'
+
 
 export default [
     {
@@ -11,9 +11,5 @@ export default [
         path:"/user/register",
         component:register,
     },
-    {
-        path:"/user/error",
-        component:error,
-    }
 
 ]

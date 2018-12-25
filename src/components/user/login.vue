@@ -1,150 +1,190 @@
 <template>
-<!--由于路径原因不能直接加背景图片 用note加入背景图-->
-<div class = "note" :style = "note">
- 
-<!--login框，表单+tab标签页的组合-->
-<div class = "loginFrame">
-    <!--表单组件放在外面，标签栏在里面-->
-    <el-form ref = "AccountForm" :model = "AccountForm"   rules = "rules"  class = "demo-ruleForm login-container">
-        <div class="title">实验室设备管理系统</div>
-        <!--tab标签-->
-        <div class = "tabsUser">
-            <el-tabs v-model = "activeName" @tab-click = "handleClick" class = "users" style = "height: 30px;font-size: 25px">
-                <el-tab-pane label = "用户" name = "students" class = "tab1"></el-tab-pane>
-                <el-tab-pane label = "管理员" name = "teacher" class = "tab2"></el-tab-pane>
-            </el-tabs>
-        </div>
-        <div class = "formGroup">
-            <el-form-item  label = "账 号：" prop = "user" >
-                <el-input type = "text"  v-model="Account" auto-complete = "off" placeholder = "请输入您的账号" class = "form-control" ></el-input>
-            </el-form-item> 
-            <el-form-item label = "密 码：" prop = "password" class = "form-inline">
-                <el-input type = "password" v-model="Password" auto-complete = "off" placeholder = "请输入密码" class = "form-control" ></el-input>
-            </el-form-item>
-        </div>
-        <div class = "remFor">
-            <el-checkbox v-model = "checked" checked  class = "remember">记住密码</el-checkbox>
-            <!-- <a href ="" class = "forget">忘记密码？</a> -->
-        </div>
-        <div class = "formButton">
-            <el-form-item style = "width:100%;">
-                <el-button type = "primary" style = "width:45%; float:left" @click="login">登录</el-button>
-                <el-button type = "primary" style = "width:45%; float:right" @click="register">注册</el-button>
-            </el-form-item>
-        </div>
-    </el-form>
-</div>
-</div>
- 
+    <div class="login-bg">
+
+            <div class="center-panel">
+                <div class="center-inner-left"></div>
+                <div class="center-inner-right">
+                    <div class="sys-title">实验室器材管理系统</div>
+                    <div class="form-area">
+                        <el-form :rules="rules">
+                            <el-form-item>
+                                <el-col :span="20" :offset="2">
+                                    <el-input v-model="user.username" placeholder="请输入用户名">
+                                        <img width="20" style="margin-top:10px;padding-right:10px;" slot="prefix" src="../../assets/user-logo.png">
+                                    </el-input>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-col :span="20" :offset="2">
+                                    <el-input type="password" v-model="user.password" placeholder="请输入密码">
+                                        <img width="20" style="margin-top:10px;padding-right:10px;" slot="prefix" src="../../assets/password-logo.png">
+                                    </el-input>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-col :span="8" :offset="2" >以何种身份登录？</el-col>
+                                <el-col :span="12" style="height:40px;line-height:40px;padding-top:10px;    text-align: right;">
+                                    <el-switch
+                                        style="display: block"
+                                        v-model="level"
+                                        active-color="#13ce66"
+                                        inactive-color="#409eff"
+                                        active-text="普通用户"
+                                        active-value="2"
+                                        inactive-text="管理员"
+                                        inactive-value="1">
+                                    </el-switch>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-col :span="6" :offset="2">
+                                    <el-checkbox v-model="remember">记住密码</el-checkbox>
+                                </el-col>
+                                <el-col style="text-align:right;" :span="10" :offset="4"> 没有账号?去<span class="go-reg-text" >注册</span></el-col>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-col :span="20" :offset="2">
+                                    <el-button  type="primary" @click="login">登录</el-button>
+                                </el-col>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+    </div>
 </template>
  
 <script>
 export default {
-        name: '登录',
-        data() {
-            return {
-                login: false,
-                //背景图
-                note: {
-                    position:"absolute",
-                    top:"0px",
-                    left:"0px",
-                    width: "100%",
-                    height:"100%",
-                    backgroundImage: "url(" + require("../../assets/beijing1.jpg") + ")",
-                    backgroundSize: "100% 100%",
-                    backgroundRepeat: "no-repeat",
-                },
-                account: {
-                    username:'',
-                    password:'',
-                },
-                rules: {
-                    username:[
-                        {required: true, message: '请输入账号',trigger: 'blur'},
-                        //{ validator: validaePass }
-                    ],
-                    password: [
-                        {required: true,message: '请输入密码', trigger: 'blur'},
-                        //{ validator: validaePass2 }
-                    ]
-                },
-                checked: false          
-            }; 
-        },      
-        methods:{
-            /*注册*/
-            register(){
-                this.$router.push({path: '/user/register'});
-            },
-            /*登陆*/
-            login(){
-                this.$router.push({path: '/repaiInfor/scrapMoney'});
-                // if(this.Account=="张三"&&this.Password=="123456")
-                // alert("登陆成功！")
-                // else  alert("账号或密码错误！")
+    name:"login",
+    data:function(){
+        return{
+            level:'1',
+            remember:false,
+            user:{
+                username:"",
+                password:"",
+                level:2
             }
-        },
+
+        }
+    },
+    methods:{
+        login:function(){
+
+            var _this=this;
+            this.user.level=parseInt(this.level);
+            this.axios({
+                method:'post',
+                url:'user/login',
+                data:_this.user,
+            })
+            .then(function(rep){
+
+                if(rep.data==="success")
+                {
+                    _this.$message({
+                        message: '登录成功，即将进入系统',
+                        type: 'success',
+                        showClose:true,
+                    });
+                    _this.$store.commit('successLogined',_this.user);
+
+                    //延迟执行跳转
+                    setTimeout(function(){alert("adasd")},1000);
+                }
+                else
+                {
+                     _this.$message({
+                        message: '登录失败，请检查用户名或密码',
+                        type: 'error',
+                        duration:6000,
+                        showClose:true,
+                    });
+
+                }
+
+            })
+            .catch(function(e){
+                 _this.$message({
+                        message:e.message,
+                        type: 'error',
+                        duration:4000,
+                        showClose:true,
+                    });
+
+            })
+
+
+
+            
+        }
+
+    }     
 } 
 </script>
- 
-<style>
+<style scoped>
 
-.title{
-    font-size:x-large;
-    color: #00808c;
-   
-}
- 
-.login-container {
-    
-    -webkit-border-radius: 5px;
-    border-radius: 15px;
-    -moz-border-radius: 5px;
-    background-clip: padding-box;
-    margin: 80px auto;
-    width: 400px;
-    padding: 35px 35px 15px 35px;
-    background: rgba(255,255,255,0.7);
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
-}
-label{
-    width:100px;
-    font-size:large;
-    text-align:left;
-    color: #00808c;
+    .login-bg{
+        border:1px solid red;
+        height:100%;
+        width:100%;
+        background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
     }
- 
-.form-control{
-    width:270px;
-    flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
- 
-}
-.remember{
-    width:250px;
-    text-align:left;
-}
-/* .forget{
-    width:500px;
-    text-align:right;
-    font-size:14px;
-    font-family:PingFang SC;
-    
-} */
-.remFor{
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    text-align: center;
-}
-.tabsUser{
-    display: inline-block;
-    margin-left: 0px;
-    margin-right:0px;
-    text-align:center;
-    font-size:25px;
-}
- 
+
+    .center-panel{
+        position: relative;
+        top:50%;
+        width:800px;
+        height:450px;
+        margin:0 auto;
+        margin-top:-225px;
+        border-radius: 14px;
+        background-color:#fff;
+        box-shadow: 0 3px 4px rgba(10,16,20,.24),0 0 4px rgba(10,16,20,.12);
+        overflow: hidden;
+    }
+    .center-panel>div{
+        float:left;
+        width:50%;
+        height:100%;
+
+    }
+     .center-inner-left{
+         background-color:#f2f2f2;
+         background: url('../../assets/login-bg.png');
+         background-size:400px 450px;
+         background-position: 0px -70px;
+     }
+    .center-inner-right{
+
+    }
+    .sys-title{
+        height:100px;
+        line-height:100px;
+        font-size:23px;
+    }
+    .el-button{
+        width:100%;
+        font-size:17px;
+        letter-spacing: 1em;
+    }
+    .go-reg-text{
+        padding-left: 5px;
+        letter-spacing: 1px;
+        font-size:14px;
+        color:#409eff;
+        cursor: pointer;
+    }
+    .go-reg-text:hover{
+        text-decoration: underline;
+        font-weight:bold;
+    }
 </style>
