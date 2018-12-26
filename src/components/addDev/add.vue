@@ -7,7 +7,7 @@
         </el-breadcrumb>
       </el-header>
       <main style="text-align:left;">
-        <el-form :label-position="labelPosition" label-width="110px" :inline="true" :model="kcChange">
+        <el-form label-width="110px" :inline="true" :model="kcChange">
             <el-form-item label="类别">
                 <el-input v-model="addBuy.category"></el-input>
             </el-form-item>

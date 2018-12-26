@@ -8,15 +8,10 @@
         </span>
     </div>
 <!-- 00808c -->
-    <span style="color:#ffffff;">当前登陆用户：{{getUsername}}</span>
+    <span style="color:#ffffff;">当前登陆用户：{{getNickName}}</span>
    <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#004d99" text-color="#fff" active-text-color="#fff">
       
-        <el-submenu index=1>
-            <template   slot="title"><i class="el-icon-setting"></i>登陆注册测试</template>   
-                <el-menu-item index="0-1">- -登陆</el-menu-item>
-                <el-menu-item index="0-2">- -申请记录</el-menu-item>
-                <!--el-menu-item index="1-3">- -处理申请</el-menu-item-->
-       </el-submenu>
+
 
        <el-submenu index=1>
             <template   slot="title"><i class="el-icon-setting"></i>设备申请管理</template>   
@@ -68,16 +63,12 @@ export default {
         handleSelect:function(index,indexpath){
             var locthis=this;
             
-            if(!locthis.isLogined){
-                this.$router.push({path:'/user/login'});
-                return;
-            }
+          
             switch(index)
             {
                 //通过index来控制路由跳转
 
-                case "0-1":locthis.$router.push({path:'/user/login'});break;
-                case "0-2":locthis.$router.push({path:'/user/error'});break;
+             
 
                 
                 case "1-1":locthis.$router.push({path:'/addDev/add'});break;
@@ -105,6 +96,9 @@ export default {
     computed:{
         getUsername(){
             return this.$store.state.user.username;
+        },
+        getNickName(){
+            return this.$store.state.user.nickname;
         },
         isLogined(){
             return this.$store.state.isLogined;

@@ -1,21 +1,16 @@
 <template>
   <div id="app">
-    <el-container>
-      <el-aside width="300px">
-         <Sider></Sider>
-      </el-aside>
-      <el-main>
-        <MainPanel></MainPanel>
-      </el-main>
-    </el-container>
-   
+  
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
+    
   </div>
 </template>
 <script>
-import Sider from '@/components/index/sider'
-import MainPanel from '@/components/index/mainPanel'
+
 export default {
-  name: 'index',
+  name: 'app',
   data:function(){
     return {
     
@@ -23,10 +18,16 @@ export default {
   },
 
   components:{
-    Sider,
-    MainPanel
-  },
 
+  },
+mounted:function(){
+
+  var user= JSON.parse(window.localStorage.getItem("user"));
+  if(user){
+     this.$store.commit('successLogined',user);
+  }
+
+},
 beforeCreate:function(){
   //用来将html和body节点高度铺满整个屏幕
   document.querySelector('html').setAttribute('style','height:100%;');
@@ -54,4 +55,17 @@ beforeCreate:function(){
 
 }
 
+.fade-enter {
+  opacity:0;
+}
+.fade-leave{
+  opacity:1;
+}
+.fade-enter-active{
+  transition:opacity .5s;
+}
+.fade-leave-active{
+  opacity:0;
+  transition:opacity .5s;
+}
 </style>

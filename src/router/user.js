@@ -1,16 +1,22 @@
 import login from '@/components/user/login'
 import register from '@/components/user/register'
-import loginsuccess from '@/components/user/loginsuccess'
+
 
 
 export default [
     {
         path:"/user/login",
+        meta:{
+            loginUnRequired:true,
+        },
         component:login,
     },
     {
-        path:"/user/loginsuccess",
-        component:loginsuccess,
+        path:"/user/regist",
+        meta:{
+            loginUnRequired:true,
+        },
+        component:register,
     },
 
 ]
