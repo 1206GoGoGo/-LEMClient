@@ -101,7 +101,7 @@ export default {
                     _this.$store.commit('successLogined',_this.user);
 
                     //延迟执行跳转
-                    setTimeout(function(){alert("adasd")},1000);
+                    setTimeout(function(){_this.$router.push({path:'/user/loginsuccess'});},1000);
                 }
                 else
                 {

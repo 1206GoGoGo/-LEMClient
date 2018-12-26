@@ -47,7 +47,7 @@
         <el-form :inline="true" label-width="110px">
 
             <el-form-item label="经办人">
-                <el-input v-model="addBuy.operator"></el-input>
+                <el-input v-model="addBuy.operator" :disabled="true"></el-input>
             </el-form-item>
 
         </el-form>
@@ -68,12 +68,15 @@
 export default {
 //上面选修课程性质用的都是名称！！！！！！！！！！-----------json数据中是名称，数据库中存的什么待处理
     name: "add",
+    created(){
+        this.addBuy.operator = this.getUsername;
+    },
 
     data() {
         return {
             kcChange:{},
             addBuy: {
-                status: '待处理'
+                status: '待处理',
             }
         };
     },
@@ -104,6 +107,11 @@ export default {
                 });
         }
 
+    },
+    computed:{
+        getUsername(){
+            return this.$store.state.user.username;
+        }
     }
 };
 </script>

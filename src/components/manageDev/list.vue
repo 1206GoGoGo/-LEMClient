@@ -129,7 +129,7 @@
         :visible.sync="dialogVisibleRepair"
         width="30%"
         :before-close="handleClose">
-        <span>确认申请后会将报修申请发送到相关负责人！</span>
+        <span>确认申请后会将报修申请发送到相关负责人！<br>经办人：{{getUsername}}</span>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisibleRepair = false">取 消</el-button>
             <el-button type="primary" @click="okRepair()">确 定</el-button>
@@ -141,7 +141,7 @@
         :visible.sync="dialogVisibleScrap"
         width="30%"
         :before-close="handleClose">
-        <span>确认申请后会将报废申请发送到相关负责人！<br>管理人员会对报废进行审核！</span>
+        <span>确认申请后会将报废申请发送到相关负责人！<br>管理人员会对报废进行审核！<br>经办人：{{getUsername}}</span>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisibleScrap = false">取 消</el-button>
             <el-button type="primary" @click="okScrap()">确 定</el-button>
@@ -209,7 +209,7 @@ export default {
       okRepair(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('equipment/repair?id='+ _this.idNow+'&responsible='+ '责任人--待处理'+'&name='+_this.nameNow )
+            this.axios.get('equipment/repair?id='+ _this.idNow+'&responsible=' + _this.getUsername +'&name='+_this.nameNow )
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
@@ -229,7 +229,7 @@ export default {
       okScrap(){
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('equipment/scrap?id='+ _this.idNow +'&responsible='+ '责任人--待处理'+'&name='+_this.nameNow )
+            this.axios.get('equipment/scrap?id='+ _this.idNow +'&responsible=' + _this.getUsername +'&name='+_this.nameNow )
                 .then(function (response) {
                     alert(response.data);
                     if(response.data=='success'){
@@ -282,6 +282,11 @@ export default {
                     alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
       }
+    },
+    computed:{
+        getUsername(){
+            return this.$store.state.user.username;
+        }
     }
 }
 </script>
