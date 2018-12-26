@@ -6,7 +6,7 @@
                 <div class="center-inner-right">
                     <div class="sys-title">实验室器材管理系统</div>
                     <div class="form-area">
-                        <el-form :rules="rules">
+                        <el-form rules="rules">
                             <el-form-item>
                                 <el-col :span="20" :offset="2">
                                     <el-input v-model="user.username" placeholder="请输入用户名">
@@ -72,6 +72,9 @@ export default {
                 username:"",
                 password:"",
                 level:2
+            },
+            rules:{
+                
             }
 
         }
