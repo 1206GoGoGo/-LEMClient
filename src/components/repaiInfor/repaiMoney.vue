@@ -1,104 +1,112 @@
 <template>
     <el-container>
-        <el-header class="header-path" style="height:40px;">
-            <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>信息统计</el-breadcrumb-item>
-            <el-breadcrumb-item>维修费用信息</el-breadcrumb-item>
-            </el-breadcrumb>
-        </el-header>
-        <div style="margin-bottom:10px; text-align:left;">  
-            <el-date-picker
-                v-model="value7"
-                type="daterange"
-                align="right"
-                unlink-panels
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                :picker-options="pickerOptions2">
-            </el-date-picker>
-            <el-input
-                style="width:180px"
-                placeholder="请输入设备名称"
-                v-model="search.key"
-                clearable>
-            </el-input>
-            总金额:
-            <el-input
-                style="width:180px"
-                placeholder=""
-                clearable>
-            </el-input>
-            <el-button type="primary" plain>查询</el-button>
-        </div>
-        <!-- slot="empty" 表格无数据不漏出来 -->
-    <el-table
-        stripe
-        border
-        highlight-current-row
-        @row-click="handleCurrentChange"
-        height="350px"
-        :data="tableData"
-        slot="empty" 
-        style="width: 100%"
-        :default-sort = "{prop: 'xqdm', order: 'descending'}">
-        <el-table-column
-            prop="sbbh"
-            label="设备编号"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="sbmc"
-            label="设备名称"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="xlcj"
-            label="修理厂家"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="wxrq"
-            label="维修日期"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="xlsl"
-            label="责任人"
-            sortable>
-        </el-table-column>
-        <el-table-column
-            prop="xlfy"
-            label="修理费用"
-            sortable
-            >
-        </el-table-column>
-    </el-table>
+      <el-header class="header-path" style="height:40px;">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>维修费用统计</el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-header>
+    <div style="margin-bottom:10px; text-align:left;">
+        <!--下拉列表框 开始-->
+        <el-select style="width:150px" v-model="search.status" clearable placeholder="请选择设备状态">
+            <el-option v-for="item in ststatus"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+        </el-select>
 
-    <!-- <el-dialog
-        title="报修申请提交确认"
-        :visible.sync="dialogVisibleRepair"
-        width="30%"
-        :before-close="handleClose">
-        <span>确认申请后会将报修申请发送到相关负责人！</span>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisibleRepair = false">取 消</el-button>
-            <el-button type="primary" @click="okRepair()">确 定</el-button>
-        </span>
-    </el-dialog>
+        <el-date-picker
+            v-model="search.data"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+            :picker-options="pickerOptions2">
+        </el-date-picker>
+        <el-input
+            style="width:180px"
+            placeholder="请输入查询信息"
+            v-model="search.key"
+            clearable>
+        </el-input>
+        <!--下拉列表框 结束-->
+        <el-button type="primary" plain @click="getData()">查询</el-button>
+        <div style="display:inline-block;"><el-alert title="通过选择设备状态或者设备关键字查询相关信息" type="success"></el-alert></div>
+        
+    </div>
+    <el-row :gutter="20">
+            <el-col :span="22">
+                <el-table
+                    class="repair-money"
+                    stripe
+                    border
+                    show-summary
+                    :summary-method="doSummary"
+                    highlight-current-row
+                    @row-click="handleCurrentChange"
+                    size="middle"
+                    :data="tableData"
+                    style="width: 100%"
+                    :default-sort = "{prop: 'xqdm', order: 'descending'}">
+                    <el-table-column
+                        :formatter="dateFormatter"
+                        prop="date"
+                        width="120px"
+                        label="修理日期"
+                        sortable>
+                    </el-table-column>
+                    <el-table-column
+                        prop="name"
+                        label="设备名"
+                        sortable>
+                    </el-table-column>
+                    <el-table-column
+                        prop="equid"
+                        label="编号"
+                        sortable
+                        >
+                    </el-table-column>
+                    <el-table-column
+                        prop="repairfactory"
+                        label="修理厂家"
+                        sortable>
+                    </el-table-column>
+                    <el-table-column
+                        prop="cost"
+                        label="修理费用"
+                        sortable>
+                    </el-table-column>
+                    <el-table-column
+                        prop="responsible"
+                        label="责任人"
+                        sortable>
+                    </el-table-column>
+                    <el-table-column
+                        prop="status"
+                        label="修理状态"
+                        sortable>
+                        <template slot-scope="scope">
+                            <el-tag
+                                :type="scope.row.status == '没修好' ? 'danger': (scope.row.status == '已修好'? 'success':'warning')"
+                                disable-transitions>
+                                {{scope.row.status}}
+                                </el-tag>
+                        </template>
+                    </el-table-column>
+                </el-table>
+        </el-col>
+        <el-col :span="2">
+            <div class="openDiagram" style="bakcground-color:pink">
+                   
+            </div>
+        </el-col>
 
-    <el-dialog
-        title="报废申请提交确认"
-        :visible.sync="dialogVisibleScrap"
-        width="30%"
-        :before-close="handleClose">
-        <span>确认申请后会将报废申请发送到相关负责人！<br>管理人员会对报废进行审核！</span>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisibleScrap = false">取 消</el-button>
-            <el-button type="primary" @click="okScrap()">确 定</el-button>
-        </span>
-    </el-dialog> -->
+    </el-row>
+ 
 
     </el-container>
 </template>
@@ -110,12 +118,15 @@ export default {
     },
     data() {
         return {
-            ststatus: [{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
-            dialogVisibleRepair: false,
-            dialogVisibleScrap: false,
+            tableHeight: window.innerHeight * 0.8 ,
+            ststatus: [{label:'全部', value:'0'},{label:'没修好', value:'没修好'},{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
+
             search:{
+                data:'',
                 status:'',
-                key:''
+                key:'',
+                timeStart:'',
+                timeEnd:''
             },
             tableData:[],
 
@@ -145,58 +156,75 @@ export default {
               picker.$emit('pick', [start, end]);
             }
           }]
-        },
-        value7: ''
+        }
+
         }
     },
     methods: {
       formatter(row, column) {
         return row.address;
       },
+            
+      add0(m){return m<10?'0'+m:m },
+      dateFormatter(row,column){
+            var expirationdate = new Date(parseInt(row.date));
+            var year=expirationdate.getFullYear();
+            var month=expirationdate.getMonth()+1;
+            var day=expirationdate.getDate();
+            return year+"-"+this.add0(month)+"-"+this.add0(day);
+      },
       handleCurrentChange(val) {
         this.currentRow = val;
       },
-      handleRepair(index, row) {
-        this.dialogVisibleRepair = true;
+      handleRepair(row) {
+        this.$router.replace({name: 'isRepair', params:{ val:row }});
       },
-      okRepair(){
-            this.dialogVisibleRepair = false;
-            this.$message({
-                message: '报修成功',
-                type: 'success'
-                });
-      },
-      handleScrap(index, row) {
-        this.dialogVisibleScrap = true;
-      },
-      okScrap(){
-          this.dialogVisibleScrap = false;
-          this.$message({
-                message: '申请成功',
-                type: 'success'
-                });
-      },
-      toDetail(index, row) {
-            this.$router.push({path: '/manageDev/detail',
-                params:{ val:row ,id: row.xqdm+new Date().getSeconds(), type: 'change'}});
-      },
-      //将数据库存储的状态数值，格式化为汉字
-      stateFormatter(row,column){
-        let state = row.state;
-        if(state === '0'){return '是'} else {return '否'}
-      },
+      doSummary(param){
+            const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = '最终合计';
+            return;
+          }
+          const values = data.map(item => Number(item[column.property]));
+          if (column.property==='cost') {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += ' 元';
+          } else {
+            sums[index] = '';
+          }
+        });
 
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
+        return sums;
+
+
       },
-        getData(){
+      getData(){
+
+            if(!this.search.status){
+                var status = '0';
+            }else{var status = this.search.status;}
+            if(!this.search.key){
+                var key = '0';
+            }else{var key = this.search.key;}
+            if(!this.search.data){
+                var timeStart = '0';
+                var timeEnd = '0';
+            }else{
+                var timeStart = this.search.data.toString().split(',')[0];
+                var timeEnd = this.search.data.toString().split(',')[1];
+            }
             var _this=this;
             //需要处理异步请求的问题
-            this.axios.get('SysXq/getAll')
+            this.axios.get('repair/find?status='+status+'&info='+key+'&timeStart='+timeStart+'&timeEnd='+timeEnd)
                 .then(function (response) {
                     //将response获得的数据进行处理
                     //将获取到的数据以数组形式传递出去
@@ -205,12 +233,26 @@ export default {
                 })
                 .catch(function (error) {
                     console.log(error);
-                    _this.tableData=[{xqdm:"12"}];
-                //alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
-            }); 
+                alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
+                });
       }
     }
 }
 </script>
 
-<style scoped></style>
+<style>
+   .repair-money .el-table__footer-wrapper{
+        font-weight:500 !important;
+        font-size:1.12em;
+        word-spacing: 2px;
+        font-family:微软雅黑;
+        
+    }
+    .repair-money .el-table__footer-wrapper tbody td, .el-table__header-wrapper tbody td{
+        background-color: #bbd3fd !important;
+        color:#424f63 !important;
+
+    }
+
+
+</style>
