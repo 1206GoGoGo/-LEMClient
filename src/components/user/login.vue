@@ -44,7 +44,10 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-col :span="20" :offset="2">
-                                    <el-button  type="primary" @click="login">登录</el-button>
+                                    <el-button 
+                                    v-loading="login_loading" 
+                                    
+                                    type="primary" @click="login">登录</el-button>
                                 </el-col>
                             </el-form-item>
                         </el-form>
@@ -66,6 +69,7 @@ export default {
     name:"login",
     data:function(){
         return{
+            login_loading:false,
             formdata:{
                 level:'1',
                 remember:false,
@@ -88,10 +92,12 @@ export default {
     },
     methods:{
         login:function(){
-            
-            this.$refs["log-form"].validate((valid)=>{
-                if(valid){
+
             var _this=this;
+
+            this.$refs["log-form"].validate((valid)=>{
+            if(valid){
+            this.login_loading=true;
             this.formdata.user.level=parseInt(this.formdata.level);
             this.axios({
                 method:'post',
@@ -102,8 +108,11 @@ export default {
 
                 if(rep.data.code==="200")
                 {
+                    
+                    _this.login_loading=false;
                     _this.$message({
-                        message: '登录成功，即将进入系统',
+                        message: '登录成功，1s后进入系统',
+                        duration:900,
                         type: 'success',
                         showClose:true,
                     });
@@ -112,19 +121,18 @@ export default {
                     //保存状态到本地
                     window.localStorage.setItem('user',JSON.stringify(rep.data.data));
                     
-
                     //延迟执行跳转
                     setTimeout(function(){_this.$router.push({path:'/'});},1000);
                 }
                 else
                 {
                      _this.$message({
-                        message: rep.data.message+'，请检查用户名或密码',
+                        message: rep.data.message+'，请检查用户名、密码或身份',
                         type: 'error',
                         duration:6000,
                         showClose:true,
                     });
-
+                    _this.login_loading=false;
                 }
 
             })
@@ -135,6 +143,7 @@ export default {
                         duration:4000,
                         showClose:true,
                     });
+                    _this.login_loading=false;
 
             })
 

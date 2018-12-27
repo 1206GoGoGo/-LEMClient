@@ -5,7 +5,7 @@ export default [
     {
         path:"/scrapDev/list",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:scrapDev,
         name:'scrapDev'
@@ -13,7 +13,7 @@ export default [
     {
         path:"/scrapDev/isScrap",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:isScrap,
         name:'isScrap'

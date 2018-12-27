@@ -17,6 +17,6 @@ mainPanel[0].children=mainPanel[0].children.concat(addDev,manageDev,repairDev,sc
 
 console.log(mainPanel);
 export default new Router({
-    mode:'history',
+    mode:'hash',
     routes:[].concat(mainPanel,user),
 })

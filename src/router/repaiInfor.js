@@ -5,14 +5,14 @@ export default [
     {
         path:"/repaiInfor/repaiMoney",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:repaiMoney,
     },
     {
         path:"/repaiInfor/scrapMoney",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:scrapMoney,
     }

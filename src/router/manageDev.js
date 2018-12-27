@@ -6,14 +6,14 @@ export default [
     {
         path:"/manageDev/list",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component: manageList
     },
     {
         path:"/manageDev/detail",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component: manageDetail,
         name: 'manageDetail'

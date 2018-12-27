@@ -20,6 +20,31 @@ Vue.use(VueAxios,axios);
 axios.defaults.baseURL = 'http://localhost:8080/lems/';
 //axios.defaults.baseURL = 'http://10.139.51.112:8080/lems/';
 
+Vue.filter('UserRoleFilter', function (value) {
+  if (value===1)
+      value = "管理员";
+  else{
+      value ="一般用户";
+  };
+  return value;
+})
+
+router.beforeEach(function(to,from,next){
+  console.log("asdadadadad"+to.path+"------"+store.state.isLogined);
+  if(to.meta.loginRequired)
+  {
+    if(store.state.isLogined)
+        next();
+    else
+      next({path:'/user/login'});
+  }
+  else
+    {
+        next();
+    }
+
+})
+
 
 new Vue({
   el: '#app',
@@ -29,20 +54,3 @@ new Vue({
   template:'<App/>'
 });
 
-
-
-router.beforeEach(function(to,from,next){
-  console.log("asdadadadad"+to.path+"------"+store.state.isLogined);
-  if(to.meta.loginUnRequired)
-  {
-    next();
-  }
-  else
-    {
-      if(store.state.isLogined)
-        next();
-      else
-        next('/user/login');
-    }
-
-})

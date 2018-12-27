@@ -7,14 +7,14 @@ export default [
     {
         path:"/user/login",
         meta:{
-            loginUnRequired:true,
+            //loginUnRequired:true,
         },
         component:login,
     },
     {
         path:"/user/regist",
         meta:{
-            loginUnRequired:true,
+            //loginUnRequired:true,
         },
         component:register,
     },

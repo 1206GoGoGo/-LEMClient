@@ -5,14 +5,14 @@ export default [
     {
         path:"/repairDev/list",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:repairDev,
     },
     {
         path:"/repairDev/isRepair",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:isRepair,
         name:'isRepair'

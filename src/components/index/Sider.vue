@@ -8,7 +8,7 @@
         </span>
     </div>
 <!-- 00808c -->
-    <span style="color:#ffffff;">当前登陆用户：{{getNickName}}</span>
+    
    <el-menu  class="" @select="handleSelect"  :unique-opened=true  background-color="#004d99" text-color="#fff" active-text-color="#fff">
       
 
@@ -100,6 +100,9 @@ export default {
         getNickName(){
             return this.$store.state.user.nickname;
         },
+        getLevel(){
+            return this.$store.state.user.level;
+        },
         isLogined(){
             return this.$store.state.isLogined;
         },
@@ -139,6 +142,7 @@ export default {
     }
     .el-menu{
         text-align: left;
+        border-right:0px;
     }
     .el-menu.el-submenu{
         background-color:white;

@@ -8,7 +8,7 @@ export default[
         component:mainPanel,
         redirect:'addDev/add',
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         children:[
 

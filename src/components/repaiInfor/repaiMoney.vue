@@ -53,10 +53,8 @@
                     style="width: 100%"
                     :default-sort = "{prop: 'xqdm', order: 'descending'}">
                     <el-table-column
-                        :formatter="dateFormatter"
-                        prop="date"
-                        width="120px"
-                        label="修理日期"
+                        prop="equid"
+                        label="编号"
                         sortable>
                     </el-table-column>
                     <el-table-column
@@ -65,10 +63,9 @@
                         sortable>
                     </el-table-column>
                     <el-table-column
-                        prop="equid"
-                        label="编号"
-                        sortable
-                        >
+                        prop="responsible"
+                        label="责任人"
+                        sortable>
                     </el-table-column>
                     <el-table-column
                         prop="repairfactory"
@@ -76,13 +73,15 @@
                         sortable>
                     </el-table-column>
                     <el-table-column
-                        prop="cost"
-                        label="修理费用"
+                        :formatter="dateFormatter"
+                        prop="date"
+                        width="120px"
+                        label="修理日期"
                         sortable>
                     </el-table-column>
                     <el-table-column
-                        prop="responsible"
-                        label="责任人"
+                        prop="cost"
+                        label="修理费用"
                         sortable>
                     </el-table-column>
                     <el-table-column
@@ -242,7 +241,7 @@ export default {
 
 <style>
    .repair-money .el-table__footer-wrapper{
-        font-weight:500 !important;
+        font-weight:bold !important;
         font-size:1.12em;
         word-spacing: 2px;
         font-family:微软雅黑;

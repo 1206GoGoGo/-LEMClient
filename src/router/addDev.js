@@ -5,14 +5,14 @@ export default [
     {
         path:"/addDev/add",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:addDev,
     },
     {
         path:"/addDev/list",
         meta:{
-            loginUnRequired:false,
+            loginRequired:true,
         },
         component:listDev,
     }

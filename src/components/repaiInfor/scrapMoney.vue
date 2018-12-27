@@ -51,10 +51,8 @@
         style="width: 80%"
         :default-sort = "{prop: 'xqdm', order: 'descending'}">
         <el-table-column
-            :formatter="dateFormatter"
-            prop="date"
-            width="120px"
-            label="报废日期"
+            prop="equid"
+            label="编号"
             sortable>
         </el-table-column>
         <el-table-column
@@ -63,19 +61,20 @@
             sortable>
         </el-table-column>
         <el-table-column
-            prop="price"
-            label="设备价格"
+            prop="responsible"
+            label="责任人"
             sortable>
         </el-table-column>
         <el-table-column
-            prop="equid"
-            label="编号"
-            sortable
-            >
+            :formatter="dateFormatter"
+            prop="date"
+            width="120px"
+            label="报废日期"
+            sortable>
         </el-table-column>
         <el-table-column
-            prop="responsible"
-            label="责任人"
+            prop="price"
+            label="设备价格"
             sortable>
         </el-table-column>
         <el-table-column
@@ -84,7 +83,7 @@
             sortable>
             <template slot-scope="scope">
              <el-tag
-                :type="scope.row.status == '审批未通过' ? 'danger': (scope.row.status == '审批通过'? 'success':'warning')"
+                :type="scope.row.status == '审批未通过' ? 'danger': (scope.row.status == '审批通过'? 'success':'primary')"
                 disable-transitions>
                 {{scope.row.status}}
                 </el-tag>
@@ -167,7 +166,7 @@ export default {
                 return prev;
               }
             }, 0);
-            sums[index] += ' 元';
+            sums[index] =sums[index]+'元';
           } else {
             sums[index] = '';
           }
@@ -229,15 +228,26 @@ export default {
 
 <style >
     .scrap-money .el-table__footer-wrapper{
-        font-weight:500 !important;
-        font-size:1.12em;
+        
+        font-size:1.22em;
         word-spacing: 2px;
         font-family:微软雅黑;
+        font-weight:bold !important;
         
     }
+    .scrap-money .total-cost{
+         font-size:1.3em;
+    }
     .scrap-money .el-table__footer-wrapper tbody td, .el-table__header-wrapper tbody td{
-        background-color: #bbd3fd !important;
+        background-color: #bbd3fd ;
         color:#424f63 !important;
+        
 
     }
+    .scrap-money .el-table__body-wrapper .el-table__row td:nth-child(3){
+       
+    }
+    .scrap-money .el-table__footer-wrapper td:nth-child(3){
+      
+    }   
 </style>
