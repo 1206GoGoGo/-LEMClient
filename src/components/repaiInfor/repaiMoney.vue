@@ -36,7 +36,14 @@
         <!--下拉列表框 结束-->
         <el-button type="primary" plain @click="getData()">查询</el-button>
         <div style="display:inline-block;"><el-alert title="通过选择设备状态或者设备关键字查询相关信息" type="success"></el-alert></div>
+        <div style="display:inline-block;margin-left:10%;"><el-button size="small" @click="showDialgram" plain type="danger">查看统计图表</el-button></div>
         
+        <el-dialog title="查看统计图表" :visible.sync="tableDialogVisible">
+            <ve-pie :data="dialgramData.numPercent"></ve-pie>
+        </el-dialog>
+
+
+
     </div>
     <el-row :gutter="20">
             <el-col :span="22">
@@ -117,9 +124,23 @@ export default {
     },
     data() {
         return {
+            tableDialogVisible:false,
             tableHeight: window.innerHeight * 0.8 ,
             ststatus: [{label:'全部', value:'0'},{label:'没修好', value:'没修好'},{label:'已修好', value:'已修好'},{label:'待修理', value:'待修理'}],
+            numPercent:{
+                unrepaired:0,
+                isrepaired:0,
+                underrepaired:0,
+            },
+            dialgramData:{
+                numPercent:{
+                    columns:['status','num'],
+                    rows:[
+                        
+                    ]
 
+                }
+            },
             search:{
                 data:'',
                 status:'',
@@ -160,6 +181,27 @@ export default {
         }
     },
     methods: {
+      showDialgram(){
+          this.numPercent.unrepaired=0;
+          this.numPercent.isrepaired=0;
+          this.numPercent.underrepaired=0;
+          for(var i=0;i<this.tableData.length;i++)
+          {
+              if(this.tableData[i].status=='没修好')
+                    this.numPercent.unrepaired++;
+                else if(this.tableData[i].status=='已修好')
+                    this.numPercent.isrepaired++;
+                else if(this.tableData[i].status=='待修理')
+                    this.numPercent.underrepaired++;
+          }
+        
+          this.tableDialogVisible=true;
+          this.dialgramData.numPercent.rows.push({"status":"没修好","num":this.numPercent.unrepaired});
+          this.dialgramData.numPercent.rows.push({"status":"已修好","num":this.numPercent.isrepaired});
+          this.dialgramData.numPercent.rows.push({"status":"待修理","num":this.numPercent.underrepaired});
+      },
+
+
       formatter(row, column) {
         return row.address;
       },

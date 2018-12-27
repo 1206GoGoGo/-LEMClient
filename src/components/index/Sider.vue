@@ -134,6 +134,11 @@ export default {
         width:160px;
         margin-right:10px;
     }
+    .whut-title-area>div{
+        padding-top: 5px;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
     .whut-title-logo{
         display: inline-block;
         margin-top:7px;
@@ -164,7 +169,7 @@ export default {
         bottom:0px;
         left:25px;
        
-        border-bottom:1px groove #95989d;
+        border-bottom:0px groove #95989d;
     }
     .el-menu-item:hover{
         background-color: #409EFF  !important;

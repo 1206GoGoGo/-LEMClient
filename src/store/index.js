@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
+var user= JSON.parse(window.localStorage.getItem("user"));
+console.log(user);
 const state={
 
     user:{
@@ -10,7 +12,7 @@ const state={
         nickname:'',
 
     },
-    isLogined:false,
+    isLogined:user? true:false,
 }
 
 

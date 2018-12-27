@@ -119,7 +119,8 @@ export default {
                     //通知前端登录
                     _this.$store.commit('successLogined',rep.data.data);
                     //保存状态到本地
-                    window.localStorage.setItem('user',JSON.stringify(rep.data.data));
+                    if(_this.formdata.remember)
+                        window.localStorage.setItem('user',JSON.stringify(rep.data.data));
                     
                     //延迟执行跳转
                     setTimeout(function(){_this.$router.push({path:'/'});},1000);

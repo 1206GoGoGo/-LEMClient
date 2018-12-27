@@ -22,16 +22,17 @@ export default {
   },
 mounted:function(){
 
-  var user= JSON.parse(window.localStorage.getItem("user"));
-  if(user){
-     this.$store.commit('successLogined',user);
-  }
+  
 
 },
 beforeCreate:function(){
   //用来将html和body节点高度铺满整个屏幕
   document.querySelector('html').setAttribute('style','height:100%;');
   document.querySelector('body').setAttribute('style','height:100%; margin:0px;padding:0px;');
+  var user= JSON.parse(window.localStorage.getItem("user"));
+  if(user){
+     this.$store.commit('successLogined',user);
+  }
 }
 }
 </script>

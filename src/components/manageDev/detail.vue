@@ -4,7 +4,7 @@
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>器材查看</el-breadcrumb-item>
-          <el-breadcrumb-item>{当前器材</el-breadcrumb-item>
+          <el-breadcrumb-item>当前器材</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
       <main style="text-align:left;">

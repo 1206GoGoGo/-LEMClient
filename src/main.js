@@ -7,7 +7,8 @@ import router from  './router';
 import axios from 'axios';
 import VueAxios from 'vue-axios'
 import store from './store'
-
+import VCharts from 'v-charts'
+console.log(store.state.isLogined)
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false;
@@ -15,6 +16,7 @@ Vue.config.productionTip = false;
 //全局引入axios
 //需要npm两个包axios和vue-axios
 Vue.use(ElementUI);
+Vue.use(VCharts);
 Vue.use(VueAxios,axios);
 //axios相关配置 //更多配置待处理
 axios.defaults.baseURL = 'http://localhost:8080/lems/';
@@ -30,7 +32,7 @@ Vue.filter('UserRoleFilter', function (value) {
 })
 
 router.beforeEach(function(to,from,next){
-  console.log("asdadadadad"+to.path+"------"+store.state.isLogined);
+  console.log("aaaaaaaaaaa"+to.path+"------"+store.state.isLogined);
   if(to.meta.loginRequired)
   {
     if(store.state.isLogined)
