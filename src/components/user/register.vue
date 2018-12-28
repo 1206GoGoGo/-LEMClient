@@ -40,7 +40,7 @@
                                 <el-col :span="12" style="height:40px;line-height:40px;padding-top:10px;    text-align: right;">
                                     <el-switch
                                         style="display: block"
-                                        v-model="level"
+                                        v-model="formdata.level"
                                         active-color="#13ce66"
                                         inactive-color="#409eff"
                                         active-text="普通用户"
