@@ -137,6 +137,9 @@ export default {
     mounted(){
         this.getData(); //获取数据前先取数据
     },
+    created(){
+        this.level = this.getLevel;
+    },
     data() {
         return {
             
@@ -158,6 +161,7 @@ export default {
                 id:''
             },
             tableData: [],
+            level:''
         }
     },
     methods: {
@@ -176,6 +180,14 @@ export default {
         this.currentRow = val;
       },
       handleState(state, row) {
+        if(state == '待购买' && this.level != '1'){
+            alert("您没有操作权限！请联系管理员");
+            return;
+        }
+        if(state == '拒绝' && this.level != '1'){
+            alert("您没有操作权限！请联系管理员");
+            return;
+        }
         this.dialogVisible = true;
         this.changes.state = state;
         this.changes.id = row.id;
@@ -236,6 +248,11 @@ export default {
                     alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
       }
+    },
+    computed:{
+        getLevel(){
+            return this.$store.state.user.level;
+        }
     }
 }
 </script>

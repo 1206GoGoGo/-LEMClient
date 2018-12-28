@@ -64,7 +64,7 @@
             <el-button type="primary" @click="button_click('return')">返回</el-button>
         </el-form>
       </main>
-    <div>待处理该设备的修理记录和报废记录</div>
+    <div></div>
       
     <el-dialog
         title="报修申请提交确认"

@@ -70,6 +70,7 @@ export default {
     name: "add",
     created(){
         this.addBuy.operator = this.getUsername;
+        this.level = this.getLevel;
     },
 
     data() {

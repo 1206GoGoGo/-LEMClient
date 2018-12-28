@@ -98,6 +98,9 @@ export default {
     mounted(){
         this.getData(); //获取数据前先取数据
     },
+    created(){
+        this.level = this.getLevel;
+    },
     data() {
         return {
             tableHeight: window.innerHeight * 0.8 ,
@@ -111,6 +114,7 @@ export default {
             },
             tableData:[],
 
+            level:'',
 
 
             
@@ -158,6 +162,10 @@ export default {
         this.currentRow = val;
       },
       handleScrap(row) {
+        if(this.level !="0"){
+            alert("你没有权限！请联系管理员");
+            return;
+        }
         this.$router.replace({name: 'isScrap', params:{ val:row }});
       },
 
@@ -189,6 +197,11 @@ export default {
                 alert("网络连接错误,无法获取服务器数据，请检查后刷新页面");
                 });
       }
+    },
+    computed:{
+        getLevel(){
+            return this.$store.state.user.level;
+        }
     }
 }
 </script>
